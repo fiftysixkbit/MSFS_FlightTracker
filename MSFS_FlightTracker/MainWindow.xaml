@@ -6,11 +6,12 @@
                  xmlns:local="clr-namespace:MSFS_FlightTracker" 
                  xmlns:map="clr-namespace:MapControl;assembly=MapControl"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                  mc:Ignorable="d"
                  ContentRendered="Window_ContentRendered"
-                 Title="MainWindow" 
-                 Height="600"
-                 Width="900">
+                 Title="MSFS Flight Tracker Tool" 
+                 Height="800"
+                 Width="1200">
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,10 +26,7 @@
                 <RowDefinition Height="58" />
                 <RowDefinition Height="65" />
                 <RowDefinition Height="100" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
+                <RowDefinition Height="150" />
                 <RowDefinition Height="200" />
             </Grid.RowDefinitions>
 
@@ -114,7 +112,7 @@
                         Width="120" 
                         Height="35"/>
                 <Button x:Name="btn_Reset" 
-                        Content="Reset Map" 
+                        Content="Reset" 
                         Command="{Binding cmdReset}" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
@@ -158,65 +156,76 @@
 
             
             <!-- VALUES -->
-            <StackPanel Grid.Row="4" 
-                        Orientation="Horizontal"
-                        Margin="10,2,10,2">
-                <Label Content="Altitude:" 
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Height="33" 
-                       Width="83"/>
-                <Label Content="{Binding bAltitudeStr}"
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top" 
-                       Height="33"
-                       Width="83"/>
-            </StackPanel>
-            <StackPanel Grid.Row="5" 
-                        Orientation="Horizontal"
-                        Margin="10,2,10,2">
-                <Label Content="Longitude:" 
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Height="33"
-                       Width="83"/>
-                <Label Content="{Binding bLongitudeStr}"
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top"
-                       Height="33"
-                       Width="83"/>
-            </StackPanel>
-            <StackPanel Grid.Row="6" 
-                        Orientation="Horizontal"
-                        Margin="10,2,10,2">
-                <Label Content="Latitude:" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top"
-                       Height="33"
-                       Width="83"/>
-                <Label Content="{Binding bLatitudeStr}" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top" 
-                       Height="33" 
-                       Width="83"/>
-            </StackPanel>
-            <StackPanel Grid.Row="7" 
-                        Orientation="Horizontal"
-                        Margin="10,2,10,2">
-                <Label Content="Heading:" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top"
-                       Height="33"
-                       Width="83"/>
-                <Label Content="{Binding bHeadingStr}" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top" 
-                       Height="33" 
-                       Width="83"/>
+            <StackPanel Grid.Row="4" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,0,10,0">
+                    <Label Content="Plane Altitude:" 
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Height="33" 
+                           Width="100"/>
+                    <Label Content="{Binding bPlaneAltitudeStr}"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           Height="33"
+                           Width="83"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,-8,10,0">
+                    <Label Content="Ground Altitude:" 
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Height="33" 
+                           Width="100"/>
+                    <Label Content="{Binding bGroundAltitudeStr}"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           Height="33"
+                           Width="83"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,-8,10,0">
+                    <Label Content="Longitude:" 
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Height="33"
+                           Width="100"/>
+                    <Label Content="{Binding bLongitudeStr}"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top"
+                           Height="33"
+                           Width="83"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,-8,10,0">
+                    <Label Content="Latitude:" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top"
+                           Height="33"
+                           Width="100"/>
+                    <Label Content="{Binding bLatitudeStr}" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           Height="33" 
+                           Width="83"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,-8,10,0">
+                    <Label Content="Heading:" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top"
+                           Height="33"
+                           Width="100"/>
+                    <Label Content="{Binding bHeadingStr}" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           Height="33" 
+                           Width="83"/>
+                </StackPanel>
             </StackPanel>
 
             <!-- ERRORS -->
-            <StackPanel Grid.Row="8"
+            <StackPanel Grid.Row="5"
                         Orientation="Vertical"
                         Margin="10,2,10,2">
                 <Label Content="Errors:" 
@@ -247,6 +256,7 @@
         <!-- RIGHT CONTENT -->
         <Grid Grid.Column="1">
             <TabControl>
+                <!-- MAP TAB -->
                 <TabItem Header="Map">
                     <Grid Background="{x:Static SystemColors.ControlBrush}" >
                         <Grid.RowDefinitions>
@@ -269,7 +279,8 @@
                             <Grid ClipToBounds="True">
                                 
                                 <!-- MAP -->
-                                <map:MapCanvas x:Name="tileCanvas">
+                                <map:MapCanvas x:Name="tileCanvas"
+                                               MouseDown="tileCanvas_MouseDown">
                                     <!-- Set a negative margin to center on the location -->
                                     <Image x:Name="planeMarker" 
                                            Height="50" 
@@ -331,7 +342,33 @@
                         </StatusBar>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Charts" />
+                
+                <!-- CHARTS TAB -->
+                <TabItem Header="Charts">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Altitude"
+                               Grid.Row="0" 
+                               FontSize="18"/>
+                        <lvc:CartesianChart Grid.Row="1"
+                                            Height="200" 
+                                            Series="{Binding AltitudeSeries}" 
+                                            Hoverable="False" 
+                                            DataTooltip="{x:Null}">
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+
+                    </Grid>
+                </TabItem>
             </TabControl>
         </Grid>
         

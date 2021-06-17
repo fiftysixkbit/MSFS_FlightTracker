@@ -1,9 +1,14 @@
-﻿using MahApps.Metro.Controls;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using MahApps.Metro.Controls;
 using MapControl;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -24,6 +29,7 @@ namespace MSFS_FlightTracker
         private SimvarsViewModel simvarVm;
         private double? lastLatitude;
         private double? lastLongitude;
+        public const int CHART_TICK_INTERVAL = 2;
 
         public MainWindow()
         {
@@ -40,7 +46,8 @@ namespace MSFS_FlightTracker
             CommandManager.AddPreviewExecutedHandler(this, this.PreviewExecuteCommand); // We're going to do some effects when zooming.
 
             simvarVm = (SimvarsViewModel)DataContext;
-            simvarVm.SetOnTickCallback(new BaseCommand((p) => { SimvarOnTick(); }));
+            simvarVm.SetOnTickCallback(new BaseCommand(async (p) => { await SimvarOnTickAsync(p); }));
+
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -48,20 +55,24 @@ namespace MSFS_FlightTracker
             CenterOnLatLong(44.837788, -0.579180);
         }
 
-        private void SimvarOnTick()
+        private async Task<Task> SimvarOnTickAsync(object param)
         {
             try
             {
+                var index = (int) param;
+
                 var latitude = simvarVm.bLatitude;
                 var longitude = simvarVm.bLongitude;
                 var heading = simvarVm.bHeading;
+                var planeAltitude = simvarVm.bPlaneAltitude;
+                var groundAltitude = simvarVm.bGroundAltitude;
 
                 // Update plane marker
-                UpdatePlaneMarker(heading);
+                await UpdatePlaneMarker(heading);
 
                 if (simvarVm.bFollowMap)
                 {
-                    CenterOnLatLong(latitude, longitude, this.tileCanvas.Zoom);
+                    await CenterOnLatLong (latitude, longitude, tileCanvas.Zoom);
                 }
 
                 if (simvarVm.bTrackingStarted)
@@ -72,18 +83,24 @@ namespace MSFS_FlightTracker
                     {
                         if (lastLatitude != latitude || lastLongitude != longitude)
                         {
-                            DrawCircle(latitude, longitude);
+                            await DrawCircle(latitude, longitude);
+                            if (index % CHART_TICK_INTERVAL == 0)
+                            {
+                                await UpdateCharts();
+                            }
                         }
                     }
                     else
                     {
-                        DrawCircle(latitude, longitude);
+                        await DrawCircle (latitude, longitude);
+                        await UpdateCharts();
                     }
 
                     // No use for these yet, was thinking of using it to join lines
                     lastLatitude = latitude;
                     lastLongitude = longitude;
 
+                    
                 }
             }
             catch (Exception ex)
@@ -91,6 +108,8 @@ namespace MSFS_FlightTracker
                 Console.WriteLine(ex);
                 simvarVm.lErrorMessages.Add("SimvarOnTick: " + ex.ToString());
             }
+
+            return Task.CompletedTask;
         }
 
         protected HwndSource GetHWinSource()
@@ -177,7 +196,29 @@ namespace MSFS_FlightTracker
             this.errorBar.Visibility = Visibility.Visible;
         }
 
-        public void DrawCircle(double latitude, double longitude)
+        private Task UpdateCharts()
+        {
+            foreach (var series in simvarVm.AltitudeSeries)
+            {
+                if (series.Title == "Plane Altitude")
+                {
+                    series.Values.Add(simvarVm.bPlaneAltitude);
+                    
+                }
+                else if (series.Title == "Ground Altitude")
+                {
+                    series.Values.Add(simvarVm.bGroundAltitude);
+                }
+                else if (series.Title == "Water")
+                {
+                    series.Values.Add(0.0);
+                }
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task DrawCircle(double latitude, double longitude)
         {
             var circle = new Ellipse();
             circle.Width = 5;
@@ -191,6 +232,8 @@ namespace MSFS_FlightTracker
             circle.SetValue(MapCanvas.LongitudeProperty, longitude);
 
             this.tileCanvas.Children.Add(circle);
+
+            return Task.CompletedTask;
         }
 
         public void RemoveAllCircles()
@@ -198,10 +241,12 @@ namespace MSFS_FlightTracker
             tileCanvas.Children.RemoveRange(3, tileCanvas.Children.Count);
         }
 
-        public void CenterOnLatLong(double degLat, double degLong, int zoom = 12)
+        public Task CenterOnLatLong(double degLat, double degLong, int zoom = 12)
         {
             this.tileCanvas.Focus();
             this.tileCanvas.Center(degLat, degLong, zoom);
+
+            return Task.CompletedTask;
         }
 
         private void OnZoomStoryboardCompleted(object sender, EventArgs e)
@@ -239,7 +284,7 @@ namespace MSFS_FlightTracker
             ((Storyboard)this.zoomGrid.FindResource(name)).Begin();
         }
 
-        public void UpdatePlaneMarker(double heading)
+        public Task UpdatePlaneMarker(double heading)
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
@@ -284,7 +329,7 @@ namespace MSFS_FlightTracker
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_100.png");
             }
-            else if (heading >= 155 && heading < 115)
+            else if (heading >= 105 && heading < 115)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_110.png");
             }
@@ -320,11 +365,11 @@ namespace MSFS_FlightTracker
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_190.png");
             }
-            else if (heading >= 195 && heading < 255)
+            else if (heading >= 195 && heading < 205)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_200.png");
             }
-            else if (heading >= 255 && heading < 215)
+            else if (heading >= 205 && heading < 215)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_210.png");
             }
@@ -392,6 +437,13 @@ namespace MSFS_FlightTracker
             image.EndInit();
 
             planeMarker.Source = image;
+
+            return Task.CompletedTask;
+        }
+
+        private void tileCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            simvarVm.bFollowMap = false;
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.FlightSimulator.SimConnect;
+﻿using LiveCharts;
+using LiveCharts.Geared;
+using LiveCharts.Wpf;
+using Microsoft.FlightSimulator.SimConnect;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace MSFS_FlightTracker
@@ -71,7 +75,9 @@ namespace MSFS_FlightTracker
     {
         #region IBaseSimConnectWrapper implementation
 
-        public const int TICK_INTERVAL = 500;
+        public const int MAP_TICK_INTERVAL = 500;
+        
+        private int m_tickIndex = 0;
 
         /// User-defined win32 event
         public const int WM_USER_SIMCONNECT = 0x0402;
@@ -113,7 +119,7 @@ namespace MSFS_FlightTracker
         {
             Console.WriteLine("Disconnect");
 
-            m_oTimer.Stop();
+            m_oMapTimer.Stop();
             Stop();
 
             if (m_oSimConnect != null)
@@ -264,12 +270,19 @@ namespace MSFS_FlightTracker
         }
         private bool m_bIsString = false;
 
-        public double bAltitude
+        public double bPlaneAltitude
         {
-            get { return m_bAltitude; }
-            set { this.SetProperty(ref m_bAltitude, value); }
+            get { return m_bPlaneAltitude; }
+            set { this.SetProperty(ref m_bPlaneAltitude, value); }
         }
-        private double m_bAltitude = 0.0;
+        private double m_bPlaneAltitude = 0.0;
+
+        public double bGroundAltitude
+        {
+            get { return m_bGroundAltitude; }
+            set { this.SetProperty(ref m_bGroundAltitude, value); }
+        }
+        private double m_bGroundAltitude = 0.0;
 
         public double bHeading
         {
@@ -298,12 +311,18 @@ namespace MSFS_FlightTracker
         }
         private double m_bLatitude = 0.0;
 
-        public string bAltitudeStr
+        public string bPlaneAltitudeStr
         {
-            get { return m_bAltitudeStr; }
-            set { this.SetProperty(ref m_bAltitudeStr, value); }
+            get { return m_bPlaneAltitudeStr; }
+            set { this.SetProperty(ref m_bPlaneAltitudeStr, value); }
         }
-        private string m_bAltitudeStr = "0.0";
+        private string m_bPlaneAltitudeStr = "0.0";
+        public string bGroundAltitudeStr
+        {
+            get { return m_bGroundAltitudeStr; }
+            set { this.SetProperty(ref m_bGroundAltitudeStr, value); }
+        }
+        private string m_bGroundAltitudeStr = "0.0";
         public string bLongitudeStr
         {
             get { return m_bLongitudeStr; }
@@ -346,11 +365,15 @@ namespace MSFS_FlightTracker
         public BaseCommand cmdSaveImage { get; private set; }
         public BaseCommand cmdOnTickCallback { get; private set; }
 
+
+        public SeriesCollection AltitudeSeries { get; set; }
+
         #endregion
 
         #region Real time
 
-        private DispatcherTimer m_oTimer = new DispatcherTimer();
+        private DispatcherTimer m_oMapTimer = new DispatcherTimer();
+        private DispatcherTimer m_oChartTimer = new DispatcherTimer();
 
         #endregion
 
@@ -374,8 +397,38 @@ namespace MSFS_FlightTracker
             cmdLoadFiles = new BaseCommand((p) => { LoadFiles(); });
             cmdSaveImage = new BaseCommand((p) => { SaveImage(); });
 
-            m_oTimer.Interval = new TimeSpan(0, 0, 0, 0, TICK_INTERVAL);
-            m_oTimer.Tick += new EventHandler(OnTick);
+            m_oMapTimer.Interval = new TimeSpan(0, 0, 0, 0, MAP_TICK_INTERVAL);
+            m_oMapTimer.Tick += new EventHandler(OnTick);
+
+            m_oMapTimer.Interval = new TimeSpan(0, 0, 0, 0, MAP_TICK_INTERVAL);
+
+            AltitudeSeries = new SeriesCollection
+            {
+                new GLineSeries
+                {
+                    Values = new GearedValues<double>(),
+                    Title = "Plane Altitude",
+                    ToolTip = "Plane Altitude",
+                    Stroke = Brushes.Red,
+                    PointGeometrySize = 0.0
+                },
+                new GLineSeries
+                {
+                    Values = new GearedValues<double>(),
+                    Title = "Ground Altitude",
+                    ToolTip = "Ground Altitude",
+                    Stroke = Brushes.Brown,
+                    PointGeometrySize = 0.0
+                },
+                new GLineSeries
+                {
+                    Values = new GearedValues<double>(),
+                    Title = "Water",
+                    ToolTip = "Water",
+                    Stroke = Brushes.Blue,
+                    PointGeometrySize = 0.0
+                }
+            };
         }
 
         public void SetOnTickCallback(BaseCommand cmd)
@@ -404,6 +457,7 @@ namespace MSFS_FlightTracker
 
 
                 AddRequest("PLANE ALTITUDE", "feet", false);
+                AddRequest("GROUND ALTITUDE", "feet", false);
                 AddRequest("PLANE LATITUDE", "degree latitude", false);
                 AddRequest("PLANE LONGITUDE", "degree longitude", false);
                 AddRequest("HEADING INDICATOR", "degree", false);
@@ -442,12 +496,17 @@ namespace MSFS_FlightTracker
         {
             MessageBoxButton btnMessageBox = MessageBoxButton.OKCancel;
             MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
-            MessageBoxResult rsltMessageBox = MessageBox.Show("This will clear the map of all markers", "Warning", btnMessageBox, icnMessageBox);
+            MessageBoxResult rsltMessageBox = MessageBox.Show("This will clear all charts and map markers", "Warning", btnMessageBox, icnMessageBox);
 
             switch (rsltMessageBox)
             {
                 case MessageBoxResult.OK:
                     this.m_mainWindow.RemoveAllCircles();
+                    m_tickIndex = 0;
+                    foreach (var series in AltitudeSeries)
+                    {
+                        series.Values.Clear(); ;
+                    }
                     break;
 
                 case MessageBoxResult.No:
@@ -479,7 +538,7 @@ namespace MSFS_FlightTracker
                 }
             }
 
-            m_oTimer.Start();
+            m_oMapTimer.Start();
         }
 
         /// The case where the user closes game
@@ -531,8 +590,8 @@ namespace MSFS_FlightTracker
 
                     if (oSimvarRequest.sName == "PLANE ALTITUDE")
                     {
-                        bAltitude = oSimvarRequest.dValue;
-                        bAltitudeStr = oSimvarRequest.sValue;
+                        bPlaneAltitude = oSimvarRequest.dValue;
+                        bPlaneAltitudeStr = oSimvarRequest.sValue;
                     }
                     else if (oSimvarRequest.sName == "PLANE LONGITUDE")
                     {
@@ -549,6 +608,11 @@ namespace MSFS_FlightTracker
                         bHeading = oSimvarRequest.dValue;
                         bHeadingStr = oSimvarRequest.sValue;
                     }
+                    else if (oSimvarRequest.sName == "GROUND ALTITUDE")
+                    {
+                        bGroundAltitude = oSimvarRequest.dValue;
+                        bGroundAltitudeStr = oSimvarRequest.sValue;
+                    }
                 }
             }
 
@@ -560,8 +624,9 @@ namespace MSFS_FlightTracker
         private void OnTick(object sender, EventArgs e)
         {
             //Console.WriteLine("OnTick");
+            m_tickIndex++;
 
-            cmdOnTickCallback.Execute(null);
+            cmdOnTickCallback.Execute(m_tickIndex);
 
             foreach (SimvarRequest oSimvarRequest in lSimvarRequests)
             {
@@ -575,6 +640,8 @@ namespace MSFS_FlightTracker
                     oSimvarRequest.bStillPending = true;
                 }
             }
+
+            
         }
 
         private void RecenterMap()
