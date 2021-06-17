@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -444,6 +445,29 @@ namespace MSFS_FlightTracker
         private void tileCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             simvarVm.bFollowMap = false;
+        }
+
+        private void ShowPlaneAltitudeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkbox = (CheckBox) sender;
+            if ((bool)checkbox.IsChecked)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void ShowGroundAltitudeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowWaterAltitudeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

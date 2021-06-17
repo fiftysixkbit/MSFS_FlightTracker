@@ -351,6 +351,25 @@ namespace MSFS_FlightTracker
         }
         private bool m_bTrackingStarted = false;
 
+        public bool bShowPlaneAltitude
+        {
+            get { return m_bShowPlaneAltitude; }
+            set { this.SetProperty(ref m_bShowPlaneAltitude, value); }
+        }
+        private bool m_bShowPlaneAltitude = true;
+        public bool bShowGroundAltitude
+        {
+            get { return m_bShowGroundAltitude; }
+            set { this.SetProperty(ref m_bShowGroundAltitude, value); }
+        }
+        private bool m_bShowGroundAltitude = true;
+        public bool bShowWaterAltitude
+        {
+            get { return m_bShowWaterAltitude; }
+            set { this.SetProperty(ref m_bShowWaterAltitude, value); }
+        }
+        private bool m_bShowWaterAltitude = false;
+
         public ObservableCollection<string> lErrorMessages { get; private set; }
 
 
