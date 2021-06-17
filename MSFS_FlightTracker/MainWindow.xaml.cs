@@ -1,17 +1,10 @@
-﻿using MapControl;
+﻿using MahApps.Metro.Controls;
+using MapControl;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -25,7 +18,7 @@ namespace MSFS_FlightTracker
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         private int _maxDownload = -1;
         private SimvarsViewModel simvarVm;
@@ -63,8 +56,6 @@ namespace MSFS_FlightTracker
                 var longitude = simvarVm.bLongitude;
                 var heading = simvarVm.bHeading;
 
-                UpdateStatuses(simvarVm.bConnected, simvarVm.bTrackingStarted);
-
                 // Update plane marker
                 UpdatePlaneMarker(heading);
 
@@ -98,6 +89,7 @@ namespace MSFS_FlightTracker
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                simvarVm.lErrorMessages.Add("SimvarOnTick: " + ex.ToString());
             }
         }
 
@@ -204,31 +196,6 @@ namespace MSFS_FlightTracker
         public void RemoveAllCircles()
         {
             tileCanvas.Children.RemoveRange(3, tileCanvas.Children.Count);
-        }
-
-        public void UpdateStatuses(bool connected, bool tracking)
-        {
-            if (connected)
-            {
-                connectedStatusLabel.Content = "YES";
-                connectedStatusLabel.Foreground = Brushes.Green;
-            }
-            else
-            {
-                connectedStatusLabel.Content = "NO";
-                connectedStatusLabel.Foreground = Brushes.Red;
-            }
-
-            if (tracking)
-            {
-                trackingStatusLabel.Content = "YES";
-                trackingStatusLabel.Foreground = Brushes.Green;
-            }
-            else
-            {
-                trackingStatusLabel.Content = "NO";
-                trackingStatusLabel.Foreground = Brushes.Red;
-            }
         }
 
         public void CenterOnLatLong(double degLat, double degLong, int zoom = 12)
@@ -397,7 +364,7 @@ namespace MSFS_FlightTracker
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_300.png");
             }
-            else if (heading >= 355 && heading < 315)
+            else if (heading >= 305 && heading < 315)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_310.png");
             }

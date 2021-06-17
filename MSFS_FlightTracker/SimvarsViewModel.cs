@@ -327,10 +327,10 @@ namespace MSFS_FlightTracker
 
         public bool bTrackingStarted
         {
-            get { return m_bStarted; }
-            set { this.SetProperty(ref m_bStarted, value); }
+            get { return m_bTrackingStarted; }
+            set { this.SetProperty(ref m_bTrackingStarted, value); }
         }
-        private bool m_bStarted = false;
+        private bool m_bTrackingStarted = false;
 
         public ObservableCollection<string> lErrorMessages { get; private set; }
 
@@ -343,7 +343,7 @@ namespace MSFS_FlightTracker
         public BaseCommand cmdRemoveSelectedRequest { get; private set; }
         public BaseCommand cmdTrySetValue { get; private set; }
         public BaseCommand cmdLoadFiles { get; private set; }
-        public BaseCommand cmdSaveFile { get; private set; }
+        public BaseCommand cmdSaveImage { get; private set; }
         public BaseCommand cmdOnTickCallback { get; private set; }
 
         #endregion
@@ -372,7 +372,7 @@ namespace MSFS_FlightTracker
             cmdRemoveSelectedRequest = new BaseCommand((p) => { RemoveSelectedRequest(); });
             cmdTrySetValue = new BaseCommand((p) => { TrySetValue(); });
             cmdLoadFiles = new BaseCommand((p) => { LoadFiles(); });
-            cmdSaveFile = new BaseCommand((p) => { SaveFile(false); });
+            cmdSaveImage = new BaseCommand((p) => { SaveImage(); });
 
             m_oTimer.Interval = new TimeSpan(0, 0, 0, 0, TICK_INTERVAL);
             m_oTimer.Tick += new EventHandler(OnTick);
@@ -418,14 +418,12 @@ namespace MSFS_FlightTracker
         {
             bTrackingStarted = true;
             sStartButtonLabel = "Stop Tracking";
-            m_mainWindow.UpdateStatuses(bConnected, bTrackingStarted);
         }
 
         private void Stop()
         {
             bTrackingStarted = false;
             sStartButtonLabel = "Start Tracking";
-            m_mainWindow.UpdateStatuses(bConnected, bTrackingStarted);
         }
 
         private void ToggleStart()
@@ -456,8 +454,11 @@ namespace MSFS_FlightTracker
                     
                     break;
             }
+        }
 
-            
+        private void SaveImage()
+        {
+            //var image = m_mainWindow.tileCanvas.CreateImage();
         }
 
         private void SimConnect_OnRecvOpen(SimConnect sender, SIMCONNECT_RECV_OPEN data)
@@ -467,8 +468,6 @@ namespace MSFS_FlightTracker
 
             sConnectButtonLabel = "Disconnect";
             bConnected = true;
-
-            m_mainWindow.UpdateStatuses(true, bTrackingStarted);
 
             // Register pending requests
             foreach (SimvarRequest oSimvarRequest in lSimvarRequests)
@@ -502,7 +501,7 @@ namespace MSFS_FlightTracker
 
         private void SimConnect_OnRecvSimobjectDataBytype(SimConnect sender, SIMCONNECT_RECV_SIMOBJECT_DATA_BYTYPE data)
         {
-            Console.WriteLine("SimConnect_OnRecvSimobjectDataBytype");
+            //Console.WriteLine("SimConnect_OnRecvSimobjectDataBytype");
 
             uint iRequest = data.dwRequestID;
             uint iObject = data.dwObjectID;
@@ -560,7 +559,7 @@ namespace MSFS_FlightTracker
         // See SimConnect.RequestDataOnSimObject
         private void OnTick(object sender, EventArgs e)
         {
-            Console.WriteLine("OnTick");
+            //Console.WriteLine("OnTick");
 
             cmdOnTickCallback.Execute(null);
 
@@ -745,28 +744,6 @@ namespace MSFS_FlightTracker
                 {
                     lErrorMessages.Add("l." + i.ToString() + " Bad input format : " + aLines[i]);
                     lErrorMessages.Add("l." + i.ToString() + " Must be : SIMVAR,UNIT");
-                }
-            }
-        }
-
-        private void SaveFile(bool _bWriteValues)
-        {
-            Microsoft.Win32.SaveFileDialog oSaveFileDialog = new Microsoft.Win32.SaveFileDialog();
-            oSaveFileDialog.Filter = "Simvars files (*.simvars)|*.simvars";
-            if (oSaveFileDialog.ShowDialog() == true)
-            {
-                using (StreamWriter oStreamWriter = new StreamWriter(oSaveFileDialog.FileName, false))
-                {
-                    foreach (SimvarRequest oSimvarRequest in lSimvarRequests)
-                    {
-                        // Format : Simvar,Unit
-                        string sFormatedLine = oSimvarRequest.sName + "," + oSimvarRequest.sUnits + "," + oSimvarRequest.bIsString;
-                        if (bSaveValues)
-                        {
-                            sFormatedLine += ",  " + oSimvarRequest.dValue.ToString();
-                        }
-                        oStreamWriter.WriteLine(sFormatedLine);
-                    }
                 }
             }
         }
