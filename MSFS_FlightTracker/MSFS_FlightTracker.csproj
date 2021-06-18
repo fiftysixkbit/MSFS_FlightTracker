@@ -222,5 +222,43 @@
     <Resource Include="images\ic_airplane_350.png" />
     <Resource Include="images\ic_airplane_360.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\ic_airplane_005.png" />
+    <Resource Include="images\ic_airplane_015.png" />
+    <Resource Include="images\ic_airplane_025.png" />
+    <Resource Include="images\ic_airplane_035.png" />
+    <Resource Include="images\ic_airplane_045.png" />
+    <Resource Include="images\ic_airplane_055.png" />
+    <Resource Include="images\ic_airplane_065.png" />
+    <Resource Include="images\ic_airplane_075.png" />
+    <Resource Include="images\ic_airplane_085.png" />
+    <Resource Include="images\ic_airplane_095.png" />
+    <Resource Include="images\ic_airplane_105.png" />
+    <Resource Include="images\ic_airplane_115.png" />
+    <Resource Include="images\ic_airplane_125.png" />
+    <Resource Include="images\ic_airplane_135.png" />
+    <Resource Include="images\ic_airplane_145.png" />
+    <Resource Include="images\ic_airplane_155.png" />
+    <Resource Include="images\ic_airplane_165.png" />
+    <Resource Include="images\ic_airplane_175.png" />
+    <Resource Include="images\ic_airplane_185.png" />
+    <Resource Include="images\ic_airplane_195.png" />
+    <Resource Include="images\ic_airplane_205.png" />
+    <Resource Include="images\ic_airplane_215.png" />
+    <Resource Include="images\ic_airplane_225.png" />
+    <Resource Include="images\ic_airplane_235.png" />
+    <Resource Include="images\ic_airplane_245.png" />
+    <Resource Include="images\ic_airplane_255.png" />
+    <Resource Include="images\ic_airplane_265.png" />
+    <Resource Include="images\ic_airplane_275.png" />
+    <Resource Include="images\ic_airplane_285.png" />
+    <Resource Include="images\ic_airplane_295.png" />
+    <Resource Include="images\ic_airplane_305.png" />
+    <Resource Include="images\ic_airplane_315.png" />
+    <Resource Include="images\ic_airplane_325.png" />
+    <Resource Include="images\ic_airplane_335.png" />
+    <Resource Include="images\ic_airplane_345.png" />
+    <Resource Include="images\ic_airplane_355.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

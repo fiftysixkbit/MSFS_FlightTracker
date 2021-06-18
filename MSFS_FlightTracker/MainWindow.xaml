@@ -350,9 +350,13 @@
                     <ScrollViewer>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30" />
+                                <RowDefinition Height="40" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="30" />
+                                <RowDefinition Height="40" />
+
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
 
                             <Label Content="Altitude"
@@ -361,7 +365,8 @@
                             <lvc:CartesianChart Grid.Row="1"
                                                 Height="250" 
                                                 Series="{Binding AltitudeSeries}" 
-                                                Hoverable="False" 
+                                                DisableAnimations="True"
+                                                Hoverable="False"
                                                 DataTooltip="{x:Null}">
                                 <lvc:CartesianChart.AxisX>
                                     <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
@@ -375,13 +380,55 @@
                                         Grid.Row="2" >
                                 <CheckBox Content="Plane Altitude"
                                           IsChecked="{Binding bShowPlaneAltitude}" 
-                                          Checked="ShowPlaneAltitudeCheckBox_Checked"/>
+                                          Margin="0,0,20,0"
+                                          Checked="ShowPlaneAltitudeCheckBox_Changed"
+                                          Unchecked="ShowPlaneAltitudeCheckBox_Changed"/>
                                 <CheckBox Content="Ground Altitude"
                                           IsChecked="{Binding bShowGroundAltitude}"
-                                          Checked="ShowGroundAltitudeCheckBox_Checked"/>
+                                          Margin="0,0,20,0"
+                                          Checked="ShowGroundAltitudeCheckBox_Changed"
+                                          Unchecked="ShowGroundAltitudeCheckBox_Changed"/>
                                 <CheckBox Content="Water"
                                           IsChecked="{Binding bShowWaterAltitude}"
-                                          Checked="ShowWaterAltitudeCheckBox_Checked"/>
+                                          Margin="0,0,20,0"
+                                          Checked="ShowWaterAltitudeCheckBox_Changed"
+                                          Unchecked="ShowWaterAltitudeCheckBox_Changed"/>
+                            </StackPanel>
+
+                            <Label Content="Speed"
+                                   Grid.Row="3" 
+                                   FontSize="18"/>
+                            <lvc:CartesianChart Grid.Row="4"
+                                                Height="250" 
+                                                Series="{Binding SpeedSeries}" 
+                                                DisableAnimations="True"
+                                                Hoverable="False"
+                                                DataTooltip="{x:Null}">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Row="5" >
+                                <CheckBox Content="True Airspeed"
+                                          IsChecked="{Binding bShowAirspeedTrue}" 
+                                          Margin="0,0,20,0"
+                                          Checked="ShowAirspeedTrueCheckBox_Changed"
+                                          Unchecked="ShowAirspeedTrueCheckBox_Changed"/>
+                                <CheckBox Content="Indicated Airspeed"
+                                          IsChecked="{Binding bShowAirspeedIndicated}"
+                                          Margin="0,0,20,0"
+                                          Checked="ShowAirspeedIndicatedCheckBox_Changed"
+                                          Unchecked="ShowAirspeedIndicatedCheckBox_Changed"/>
+                                <CheckBox Content="Ground Speed"
+                                          IsChecked="{Binding bShowGroundSpeed}"
+                                          Margin="0,0,20,0"
+                                          Checked="ShowGroundSpeedCheckBox_Changed"
+                                          Unchecked="ShowGroundSpeedCheckBox_Changed"/>
                             </StackPanel>
 
                         </Grid>

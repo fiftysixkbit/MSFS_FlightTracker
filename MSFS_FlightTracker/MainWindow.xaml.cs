@@ -1,5 +1,6 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
+using LiveCharts.Geared;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
 using MapControl;
@@ -204,7 +205,6 @@ namespace MSFS_FlightTracker
                 if (series.Title == "Plane Altitude")
                 {
                     series.Values.Add(simvarVm.bPlaneAltitude);
-                    
                 }
                 else if (series.Title == "Ground Altitude")
                 {
@@ -213,6 +213,22 @@ namespace MSFS_FlightTracker
                 else if (series.Title == "Water")
                 {
                     series.Values.Add(0.0);
+                }
+            }
+
+            foreach (var series in simvarVm.SpeedSeries)
+            {
+                if (series.Title == "True Airspeed")
+                {
+                    series.Values.Add(simvarVm.bAirspeedTrue);
+                }
+                else if (series.Title == "Indicated Airspeed")
+                {
+                    series.Values.Add(simvarVm.bAirspeedIndicated);
+                }
+                else if (series.Title == "Ground Speed")
+                {
+                    series.Values.Add(simvarVm.bGroundSpeed);
                 }
             }
 
@@ -290,147 +306,291 @@ namespace MSFS_FlightTracker
             BitmapImage image = new BitmapImage();
             image.BeginInit();
 
-            if (heading >= 5 && heading < 15)
+            if (heading >= 2.5 && heading < 7.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_005.png");
+            }
+            if (heading >= 7.5 && heading < 12.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_010.png");
             }
-            else if (heading >= 15 && heading < 25)
+            else if (heading >= 12.5 && heading < 17.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_015.png");
+            }
+            else if (heading >= 17.5 && heading < 22.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_020.png");
             }
-            else if (heading >= 25 && heading < 35)
+            else if (heading >= 22.5 && heading < 27.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_025.png");
+            }
+            else if (heading >= 27.5 && heading < 32.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_030.png");
             }
-            else if (heading >= 35 && heading < 45)
+            else if (heading >= 32.5 && heading < 37.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_035.png");
+            }
+            else if (heading >= 37.5 && heading < 42.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_040.png");
             }
-            else if (heading >= 45 && heading < 55)
+            else if (heading >= 42.5 && heading < 47.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_045.png");
+            }
+            else if (heading >= 47.5 && heading < 52.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_050.png");
             }
-            else if (heading >= 55 && heading < 65)
+            else if (heading >= 52.5 && heading < 57.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_055.png");
+            }
+            else if (heading >= 57.5 && heading < 62.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_060.png");
             }
-            else if (heading >= 65 && heading < 75)
+            else if (heading >= 62.5 && heading < 67.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_065.png");
+            }
+            else if (heading >= 67.5 && heading < 72.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_070.png");
             }
-            else if (heading >= 75 && heading < 85)
+            else if (heading >= 72.5 && heading < 77.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_075.png");
+            }
+            else if (heading >= 77.5 && heading < 82.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_080.png");
             }
-            else if (heading >= 85 && heading < 95)
+            else if (heading >= 82.5 && heading < 87.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_085.png");
+            }
+            else if (heading >= 87.5 && heading < 92.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_090.png");
             }
-            else if (heading >= 95 && heading < 105)
+            else if (heading >= 92.5 && heading < 97.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_095.png");
+            }
+            else if (heading >= 97.5 && heading < 102.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_100.png");
             }
-            else if (heading >= 105 && heading < 115)
+            else if (heading >= 102.5 && heading < 107.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_105.png");
+            }
+            else if (heading >= 107.5 && heading < 112.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_110.png");
             }
-            else if (heading >= 115 && heading < 125)
+            else if (heading >= 112.5 && heading < 117.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_115.png");
+            }
+            else if (heading >= 117.5 && heading < 122.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_120.png");
             }
-            else if (heading >= 125 && heading < 135)
+            else if (heading >= 122.5 && heading < 127.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_125.png");
+            }
+            else if (heading >= 127.5 && heading < 132.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_130.png");
             }
-            else if (heading >= 135 && heading < 145)
+            else if (heading >= 132.5 && heading < 137.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_135.png");
+            }
+            else if (heading >= 137.5 && heading < 142.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_140.png");
             }
-            else if (heading >= 145 && heading < 155)
+            else if (heading >= 142.5 && heading < 147.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_145.png");
+            }
+            else if (heading >= 147.5 && heading < 152.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_150.png");
             }
-            else if (heading >= 155 && heading < 165)
+            else if (heading >= 152.5 && heading < 157.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_155.png");
+            }
+            else if (heading >= 157.5 && heading < 162.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_160.png");
             }
-            else if (heading >= 165 && heading < 175)
+            else if (heading >= 162.5 && heading < 167.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_165.png");
+            }
+            else if (heading >= 167.5 && heading < 172.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_170.png");
             }
-            else if (heading >= 175 && heading < 185)
+            else if (heading >= 172.5 && heading < 177.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_175.png");
+            }
+            else if (heading >= 177.5 && heading < 182.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_180.png");
             }
-            else if (heading >= 185 && heading < 195)
+            else if (heading >= 182.5 && heading < 187.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_185.png");
+            }
+            else if (heading >= 187.5 && heading < 192.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_190.png");
             }
-            else if (heading >= 195 && heading < 205)
+            else if (heading >= 192.5 && heading < 197.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_195.png");
+            }
+            else if (heading >= 197.5 && heading < 202.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_200.png");
             }
-            else if (heading >= 205 && heading < 215)
+            else if (heading >= 202.5 && heading < 207.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_205.png");
+            }
+            else if (heading >= 207.5 && heading < 212.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_210.png");
             }
-            else if (heading >= 215 && heading < 225)
+            else if (heading >= 212.5 && heading < 217.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_215.png");
+            }
+            else if (heading >= 217.5 && heading < 222.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_220.png");
             }
-            else if (heading >= 225 && heading < 235)
+            else if (heading >= 222.5 && heading < 227.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_225.png");
+            }
+            else if (heading >= 227.5 && heading < 232.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_230.png");
             }
-            else if (heading >= 235 && heading < 245)
+            else if (heading >= 232.5 && heading < 237.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_235.png");
+            }
+            else if (heading >= 237.5 && heading < 242.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_240.png");
             }
-            else if (heading >= 245 && heading < 255)
+            else if (heading >= 242.5 && heading < 247.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_245.png");
+            }
+            else if (heading >= 247.5 && heading < 252.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_250.png");
             }
-            else if (heading >= 255 && heading < 265)
+            else if (heading >= 252.5 && heading < 257.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_255.png");
+            }
+            else if (heading >= 257.5 && heading < 262.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_260.png");
             }
-            else if (heading >= 265 && heading < 275)
+            else if (heading >= 262.5 && heading < 267.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_265.png");
+            }
+            else if (heading >= 267.5 && heading < 272.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_270.png");
             }
-            else if (heading >= 275 && heading < 285)
+            else if (heading >= 272.5 && heading < 277.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_275.png");
+            }
+            else if (heading >= 277.5 && heading < 282.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_280.png");
             }
-            else if (heading >= 285 && heading < 295)
+            else if (heading >= 282.5 && heading < 287.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_285.png");
+            }
+            else if (heading >= 287.5 && heading < 292.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_290.png");
             }
-            else if (heading >= 295 && heading < 305)
+            else if (heading >= 292.5 && heading < 297.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_295.png");
+            }
+            else if (heading >= 297.5 && heading < 302.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_300.png");
             }
-            else if (heading >= 305 && heading < 315)
+            else if (heading >= 302.5 && heading < 307.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_305.png");
+            }
+            else if (heading >= 307.5 && heading < 312.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_310.png");
             }
-            else if (heading >= 315 && heading < 325)
+            else if (heading >= 312.5 && heading < 317.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_315.png");
+            }
+            else if (heading >= 317.5 && heading < 322.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_320.png");
             }
-            else if (heading >= 325 && heading < 335)
+            else if (heading >= 322.5 && heading < 327.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_325.png");
+            }
+            else if (heading >= 327.5 && heading < 332.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_330.png");
             }
-            else if (heading >= 335 && heading < 345)
+            else if (heading >= 332.5 && heading < 337.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_335.png");
+            }
+            else if (heading >= 337.5 && heading < 342.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_340.png");
             }
-            else if (heading >= 345 && heading < 355)
+            else if (heading >= 342.5 && heading < 347.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_345.png");
+            }
+            else if (heading >= 347.5 && heading < 352.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_350.png");
             }
-            else if (heading >= 355 || heading < 5)
+            else if (heading >= 352.5 && heading < 357.5)
+            {
+                image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_355.png");
+            }
+            else if (heading >= 357.5 || heading < 2.5)
             {
                 image.UriSource = new Uri("pack://application:,,,/MSFS_FlightTracker;component/images/ic_airplane_360.png");
             }
@@ -447,27 +607,88 @@ namespace MSFS_FlightTracker
             simvarVm.bFollowMap = false;
         }
 
-        private void ShowPlaneAltitudeCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ShowPlaneAltitudeCheckBox_Changed(object sender, RoutedEventArgs e)
         {
-            CheckBox checkbox = (CheckBox) sender;
-            if ((bool)checkbox.IsChecked)
+            if (simvarVm != null && simvarVm.AltitudeSeries != null)
             {
-
-            }
-            else
-            {
-
+                foreach (GLineSeries series in simvarVm.AltitudeSeries)
+                {
+                    if (series.Title == "Plane Altitude")
+                    {
+                        series.Visibility = simvarVm.bShowPlaneAltitude ? Visibility.Visible : Visibility.Hidden;
+                    }
+                }
             }
         }
 
-        private void ShowGroundAltitudeCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ShowGroundAltitudeCheckBox_Changed(object sender, RoutedEventArgs e)
         {
-
+            if (simvarVm != null && simvarVm.AltitudeSeries != null)
+            {
+                foreach (GLineSeries series in simvarVm.AltitudeSeries)
+                {
+                    if (series.Title == "Ground Altitude")
+                    {
+                        series.Visibility = simvarVm.bShowGroundAltitude ? Visibility.Visible : Visibility.Hidden;
+                    }
+                }
+            }
         }
 
-        private void ShowWaterAltitudeCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ShowWaterAltitudeCheckBox_Changed(object sender, RoutedEventArgs e)
         {
+            if (simvarVm != null && simvarVm.AltitudeSeries != null)
+            {
+                foreach (GLineSeries series in simvarVm.AltitudeSeries)
+                {
+                    if (series.Title == "Water")
+                    {
+                        series.Visibility = simvarVm.bShowWaterAltitude ? Visibility.Visible : Visibility.Hidden;
+                    }
+                }
+            }
+        }
 
+        private void ShowAirspeedTrueCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            if (simvarVm != null && simvarVm.SpeedSeries != null)
+            {
+                foreach (GLineSeries series in simvarVm.SpeedSeries)
+                {
+                    if (series.Title == "True Airspeed")
+                    {
+                        series.Visibility = simvarVm.bShowAirspeedTrue ? Visibility.Visible : Visibility.Hidden;
+                    }
+                }
+            }
+        }
+
+        private void ShowAirspeedIndicatedCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            if (simvarVm != null && simvarVm.SpeedSeries != null)
+            {
+                foreach (GLineSeries series in simvarVm.SpeedSeries)
+                {
+                    if (series.Title == "Indicated Airspeed")
+                    {
+                        series.Visibility = simvarVm.bShowAirspeedIndicated ? Visibility.Visible : Visibility.Hidden;
+                    }
+                }
+            }
+        }
+
+        private void ShowGroundSpeedCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            if (simvarVm != null && simvarVm.SpeedSeries != null)
+            {
+                foreach (GLineSeries series in simvarVm.SpeedSeries)
+                {
+                    if (series.Title == "Ground Speed")
+                    {
+                        series.Visibility = simvarVm.bShowGroundSpeed ? Visibility.Visible : Visibility.Hidden;
+                    }
+                }
+            }
         }
     }
 }

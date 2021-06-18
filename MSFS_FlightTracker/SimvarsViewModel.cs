@@ -337,6 +337,44 @@ namespace MSFS_FlightTracker
         }
         private string m_bLatitudeStr = "0.0";
 
+        public double bAirspeedTrue
+        {
+            get { return m_bAirspeedTrue; }
+            set { this.SetProperty(ref m_bAirspeedTrue, value); }
+        }
+        private double m_bAirspeedTrue = 0.0;
+        public double bAirspeedIndicated
+        {
+            get { return m_bAirspeedIndicated; }
+            set { this.SetProperty(ref m_bAirspeedIndicated, value); }
+        }
+        private double m_bAirspeedIndicated = 0.0;
+        public double bGroundSpeed
+        {
+            get { return m_bGroundSpeed; }
+            set { this.SetProperty(ref m_bGroundSpeed, value); }
+        }
+        private double m_bGroundSpeed = 0.0;
+
+        public string bAirspeedTrueStr
+        {
+            get { return m_bAirspeedTrueStr; }
+            set { this.SetProperty(ref m_bAirspeedTrueStr, value); }
+        }
+        private string m_bAirspeedTrueStr = "0.0";
+        public string bAirspeedIndicatedStr
+        {
+            get { return m_bAirspeedIndicatedStr; }
+            set { this.SetProperty(ref m_bAirspeedIndicatedStr, value); }
+        }
+        private string m_bAirspeedIndicatedStr = "0.0";
+        public string bGroundSpeedStr
+        {
+            get { return m_bGroundSpeedStr; }
+            set { this.SetProperty(ref m_bGroundSpeedStr, value); }
+        }
+        private string m_bGroundSpeedStr = "0.0";
+
         public bool bFollowMap
         {
             get { return m_bFollowMap; }
@@ -368,7 +406,26 @@ namespace MSFS_FlightTracker
             get { return m_bShowWaterAltitude; }
             set { this.SetProperty(ref m_bShowWaterAltitude, value); }
         }
-        private bool m_bShowWaterAltitude = false;
+        private bool m_bShowWaterAltitude = true;
+
+        public bool bShowAirspeedTrue
+        {
+            get { return m_bShowAirspeedTrue; }
+            set { this.SetProperty(ref m_bShowAirspeedTrue, value); }
+        }
+        private bool m_bShowAirspeedTrue = true;
+        public bool bShowAirspeedIndicated
+        {
+            get { return m_bShowAirspeedIndicated; }
+            set { this.SetProperty(ref m_bShowAirspeedIndicated, value); }
+        }
+        private bool m_bShowAirspeedIndicated = true;
+        public bool bShowGroundSpeed
+        {
+            get { return m_bShowGroundSpeed; }
+            set { this.SetProperty(ref m_bShowGroundSpeed, value); }
+        }
+        private bool m_bShowGroundSpeed = true;
 
         public ObservableCollection<string> lErrorMessages { get; private set; }
 
@@ -386,6 +443,7 @@ namespace MSFS_FlightTracker
 
 
         public SeriesCollection AltitudeSeries { get; set; }
+        public SeriesCollection SpeedSeries { get; set; }
 
         #endregion
 
@@ -429,7 +487,7 @@ namespace MSFS_FlightTracker
                     Title = "Plane Altitude",
                     ToolTip = "Plane Altitude",
                     Stroke = Brushes.Red,
-                    PointGeometrySize = 0.0
+                    PointGeometry = null
                 },
                 new GLineSeries
                 {
@@ -437,7 +495,7 @@ namespace MSFS_FlightTracker
                     Title = "Ground Altitude",
                     ToolTip = "Ground Altitude",
                     Stroke = Brushes.Brown,
-                    PointGeometrySize = 0.0
+                    PointGeometry = null
                 },
                 new GLineSeries
                 {
@@ -445,7 +503,32 @@ namespace MSFS_FlightTracker
                     Title = "Water",
                     ToolTip = "Water",
                     Stroke = Brushes.Blue,
-                    PointGeometrySize = 0.0
+                    PointGeometry = null
+                }
+            };
+
+            SpeedSeries = new SeriesCollection
+            {
+                new GLineSeries
+                {
+                    Values = new GearedValues<double>(),
+                    Title = "True Airspeed",
+                    ToolTip = "True Airspeed",
+                    PointGeometry = null
+                },
+                new GLineSeries
+                {
+                    Values = new GearedValues<double>(),
+                    Title = "Indicated Airspeed",
+                    ToolTip = "Indicated Airspeed",
+                    PointGeometry = null
+                },
+                new GLineSeries
+                {
+                    Values = new GearedValues<double>(),
+                    Title = "Ground Speed",
+                    ToolTip = "Ground Speed",
+                    PointGeometry = null
                 }
             };
         }
@@ -480,6 +563,9 @@ namespace MSFS_FlightTracker
                 AddRequest("PLANE LATITUDE", "degree latitude", false);
                 AddRequest("PLANE LONGITUDE", "degree longitude", false);
                 AddRequest("HEADING INDICATOR", "degree", false);
+                AddRequest("AIRSPEED TRUE", "knot", false);
+                AddRequest("AIRSPEED INDICATED", "knot", false);
+                AddRequest("GROUND VELOCITY", "knot", false);
             }
             catch (COMException ex)
             {
@@ -523,6 +609,10 @@ namespace MSFS_FlightTracker
                     this.m_mainWindow.RemoveAllCircles();
                     m_tickIndex = 0;
                     foreach (var series in AltitudeSeries)
+                    {
+                        series.Values.Clear(); ;
+                    }
+                    foreach (var series in SpeedSeries)
                     {
                         series.Values.Clear(); ;
                     }
@@ -631,6 +721,21 @@ namespace MSFS_FlightTracker
                     {
                         bGroundAltitude = oSimvarRequest.dValue;
                         bGroundAltitudeStr = oSimvarRequest.sValue;
+                    }
+                    else if (oSimvarRequest.sName == "AIRSPEED TRUE")
+                    {
+                        bAirspeedTrue = oSimvarRequest.dValue;
+                        bAirspeedTrueStr = oSimvarRequest.sValue;
+                    }
+                    else if (oSimvarRequest.sName == "AIRSPEED INDICATED")
+                    {
+                        bAirspeedIndicated = oSimvarRequest.dValue;
+                        bAirspeedIndicatedStr = oSimvarRequest.sValue;
+                    }
+                    else if (oSimvarRequest.sName == "GROUND VELOCITY")
+                    {
+                        bGroundSpeed = oSimvarRequest.dValue;
+                        bGroundSpeedStr = oSimvarRequest.sValue;
                     }
                 }
             }
