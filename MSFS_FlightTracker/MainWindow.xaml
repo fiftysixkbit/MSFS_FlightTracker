@@ -22,237 +22,277 @@
         <!-- LEFT CONTROLS -->
         <ScrollViewer>
             <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="58" />
-                <RowDefinition Height="65" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="150" />
-                <RowDefinition Height="200" />
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="85" />
+                    <RowDefinition Height="65" />
+                    <RowDefinition Height="180" />
+                    <RowDefinition Height="150" />
+                    <RowDefinition Height="200" />
+                </Grid.RowDefinitions>
 
-            <!-- CONNECT -->
-            <StackPanel Orientation="Horizontal" 
-                        Grid.Row="0"
-                        Margin="10,10,10,5">
-                <Button x:Name="btn_Connection" 
-                        Content="{Binding sConnectButtonLabel}" 
-                        Command="{Binding cmdToggleConnect}" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        Margin="0,0,10,0"
-                        Width="110" 
-                        Height="35"/>
-                
-                
-            </StackPanel>
-
-            <!-- STATUSES -->
-            <StackPanel Orientation="Vertical" 
-                        Grid.Row="1"
-                        Margin="10,5,10,2">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Connected to sim: " 
-                           Width="110"/>
-                    <Ellipse HorizontalAlignment="Right"
-                         Height="20"  
-                         Width="20"
-                         Margin="10,0,0,0"
-                         Stroke="Black" 
-                         VerticalAlignment="Center">
-                        <Ellipse.Style>
-                            <Style TargetType="Ellipse">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding bConnected}" Value="false">
-                                        <Setter Property="Fill" Value="#FFFF5030" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding bConnected}" Value="true">
-                                        <Setter Property="Fill" Value="#FF50FF30" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Ellipse.Style>
-                    </Ellipse>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Tracking flight: "
-                           Width="110"/>
-                    <Ellipse HorizontalAlignment="Right"
-                         Height="20"  
-                         Width="20"
-                         Margin="10,0,0,0"
-                         Stroke="Black" 
-                         VerticalAlignment="Center">
-                        <Ellipse.Style>
-                            <Style TargetType="Ellipse">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding bTrackingStarted}" Value="false">
-                                        <Setter Property="Fill" Value="#FFFF5030" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding bTrackingStarted}" Value="true">
-                                        <Setter Property="Fill" Value="#FF50FF30" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Ellipse.Style>
-                    </Ellipse>
-                </StackPanel>
-            </StackPanel>
-
-            <!-- TRACKING CONTROLS -->
-            <StackPanel Orientation="Horizontal" 
-                        Grid.Row="2"
-                        Margin="10,2,10,2">
-                <Button x:Name="btn_Start" 
-                        Content="{Binding sStartButtonLabel}" 
-                        Command="{Binding cmdToggleStart}" 
-                        IsEnabled="{Binding bConnected}"
-                        Margin="0,0,10,0"
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        Width="110" 
-                        Height="35"/>
-                <Button x:Name="btn_Reset" 
-                        Content="Reset" 
-                        Command="{Binding cmdReset}" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        Width="110" 
-                        Height="35"/>
-            </StackPanel>
-
-            <!-- MAP CONTROLS -->
-            <StackPanel Orientation="Vertical" 
-                        Grid.Row="3"
-                        Margin="10,2,10,2">
-                <Label Content="Map Controls:" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Center"
-                       Height="26"
-                       Width="83"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button x:Name="btn_Recenter" 
-                            Content="Recenter" 
-                            Command="{Binding cmdRecenter}" 
-                            IsEnabled="{Binding bConnected}"
-                            HorizontalAlignment="Left" 
+                <!-- CONNECT -->
+                <StackPanel Orientation="Horizontal" 
+                            Grid.Row="0"
+                            Margin="10,10,10,5">
+                    <Button x:Name="btn_Connection" 
+                            Content="{Binding sConnectButtonLabel}" 
+                            Command="{Binding cmdToggleConnect}" 
+                            HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
                             Margin="0,0,10,0"
-                            Width="80" 
-                            Height="25" />
-                    <Button x:Name="btn_SaveImage" 
-                            Content="Save Image" 
-                            Command="{Binding cmdSaveImage}" 
-                            HorizontalAlignment="Left" 
+                            Width="110" 
+                            Height="35"/>
+
+
+                </StackPanel>
+
+                <!-- STATUSES -->
+                <StackPanel Orientation="Vertical" 
+                            Grid.Row="1"
+                            Margin="10,5,10,2">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Connected to sim: " 
+                               Width="110"/>
+                        <Ellipse HorizontalAlignment="Right"
+                             Height="20"  
+                             Width="20"
+                             Margin="10,0,0,0"
+                             Stroke="Black" 
+                             VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding bConnected}" Value="false">
+                                            <Setter Property="Fill" Value="#FFFF5030" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding bConnected}" Value="true">
+                                            <Setter Property="Fill" Value="#FF50FF30" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Tracking flight: "
+                               Width="110"/>
+                        <Ellipse HorizontalAlignment="Right"
+                             Height="20"  
+                             Width="20"
+                             Margin="10,0,0,0"
+                             Stroke="Black" 
+                             VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding bTrackingStarted}" Value="false">
+                                            <Setter Property="Fill" Value="#FFFF5030" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding bTrackingStarted}" Value="true">
+                                            <Setter Property="Fill" Value="#FF50FF30" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Simulation running: " 
+                               Width="110"/>
+                        <Ellipse HorizontalAlignment="Right"
+                             Height="20"  
+                             Width="20"
+                             Margin="10,0,0,0"
+                             Stroke="Black" 
+                             VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding bSimRunning}" Value="false">
+                                            <Setter Property="Fill" Value="#FFFF5030" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding bSimRunning}" Value="true">
+                                            <Setter Property="Fill" Value="#FF50FF30" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- TRACKING CONTROLS -->
+                <StackPanel Orientation="Horizontal" 
+                            Grid.Row="2"
+                            Margin="10,2,10,2">
+                    <Button x:Name="btn_Start" 
+                            Content="{Binding sStartButtonLabel}" 
+                            Command="{Binding cmdToggleStart}" 
+                            IsEnabled="{Binding bConnected}"
+                            Margin="0,0,10,0"
+                            HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            IsEnabled="False"
-                            Width="80" 
-                            Height="25" />
-                </StackPanel>
-                <CheckBox Content="Follow"
-                          Margin="0,5,0,0"
-                          IsEnabled="{Binding bConnected}"
-                          IsChecked="{Binding bFollowMap}"/>
+                            Width="110" 
+                            Height="35"/>
+                    <Button x:Name="btn_Reset" 
+                            Content="Reset" 
+                            Command="{Binding cmdReset}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Width="110" 
+                            Height="35"/>
                 </StackPanel>
 
-            
-            <!-- VALUES -->
-            <StackPanel Grid.Row="4" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal"
-                            Margin="10,0,10,0">
-                    <Label Content="Plane Altitude:" 
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Height="33" 
-                           Width="100"/>
-                    <Label Content="{Binding bPlaneAltitudeStr}"
+                <!-- MAP CONTROLS -->
+                <StackPanel Orientation="Vertical" 
+                            Grid.Row="3"
+                            Margin="10,2,10,2">
+                    <Label Content="Map Controls:" 
                            HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" 
-                           Height="33"
+                           VerticalAlignment="Center"
+                           Height="26"
                            Width="83"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            Margin="10,-8,10,0">
-                    <Label Content="Ground Altitude:" 
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Height="33" 
-                           Width="100"/>
-                    <Label Content="{Binding bGroundAltitudeStr}"
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" 
-                           Height="33"
-                           Width="83"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            Margin="10,-8,10,0">
-                    <Label Content="Longitude:" 
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Height="33"
-                           Width="100"/>
-                    <Label Content="{Binding bLongitudeStr}"
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top"
-                           Height="33"
-                           Width="83"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            Margin="10,-8,10,0">
-                    <Label Content="Latitude:" 
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top"
-                           Height="33"
-                           Width="100"/>
-                    <Label Content="{Binding bLatitudeStr}" 
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" 
-                           Height="33" 
-                           Width="83"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            Margin="10,-8,10,0">
-                    <Label Content="Heading:" 
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top"
-                           Height="33"
-                           Width="100"/>
-                    <Label Content="{Binding bHeadingStr}" 
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" 
-                           Height="33" 
-                           Width="83"/>
-                </StackPanel>
-            </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btn_Recenter" 
+                                Content="Recenter" 
+                                Command="{Binding cmdRecenter}" 
+                                IsEnabled="{Binding bConnected}"
+                                HorizontalAlignment="Left" 
+                                VerticalAlignment="Center" 
+                                Margin="0,0,10,0"
+                                Width="80" 
+                                Height="25" />
+                        <Button x:Name="btn_SaveImage" 
+                                Content="Save Image" 
+                                Command="{Binding cmdSaveImage}" 
+                                HorizontalAlignment="Left" 
+                                VerticalAlignment="Center" 
+                                IsEnabled="False"
+                                Width="80" 
+                                Height="25" />
+                    </StackPanel>
+                    <CheckBox Content="Follow"
+                              Margin="0,5,0,0"
+                              IsEnabled="{Binding bConnected}"
+                              IsChecked="{Binding bFollowMap}"/>
 
-            <!-- ERRORS -->
-            <StackPanel Grid.Row="5"
-                        Orientation="Vertical"
-                        Margin="10,2,10,2">
-                <Label Content="Errors:" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top"
-                       Height="23"
-                       Width="83"/>
-                <ListBox ItemsSource="{Binding lErrorMessages}" 
-                         RenderTransformOrigin="0.5,0.5" 
-                         Width="236" 
-                         Height="100"
-                         HorizontalAlignment="Left">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Foreground" 
-                                    Value="Red"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel VerticalAlignment="Bottom"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
-            </StackPanel>
-        </Grid>
+                    <Label Content="UI Theme:"
+                           Margin="0,10,0,0"/>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5, 0, 10, 10">
+                        <RadioButton Content="Light"
+                                     Margin="0,0,15,0"
+                                     IsChecked="True"
+                                     Checked="LightThemeRadioButton_Checked"
+                                     GroupName="ThemeRadioButtons" />
+                        <RadioButton Content="Dark"
+                                     Checked="DarkThemeRadioButton_Checked"
+                                     GroupName="ThemeRadioButtons" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- VALUES -->
+                <StackPanel Grid.Row="4" Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,0,10,0">
+                        <Label Content="Plane Altitude:" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="33" 
+                               Width="100"/>
+                        <Label Content="{Binding bPlaneAltitudeStr}"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Height="33"
+                               Width="83"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,-8,10,0">
+                        <Label Content="Ground Altitude:" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="33" 
+                               Width="100"/>
+                        <Label Content="{Binding bGroundAltitudeStr}"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Height="33"
+                               Width="83"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,-8,10,0">
+                        <Label Content="Longitude:" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="33"
+                               Width="100"/>
+                        <Label Content="{Binding bLongitudeStr}"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top"
+                               Height="33"
+                               Width="83"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,-8,10,0">
+                        <Label Content="Latitude:" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top"
+                               Height="33"
+                               Width="100"/>
+                        <Label Content="{Binding bLatitudeStr}" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Height="33" 
+                               Width="83"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,-8,10,0">
+                        <Label Content="Heading:" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top"
+                               Height="33"
+                               Width="100"/>
+                        <Label Content="{Binding bHeadingStr}" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Height="33" 
+                               Width="83"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- ERRORS -->
+                <StackPanel Grid.Row="5"
+                            Orientation="Vertical"
+                            VerticalAlignment="Bottom"
+                            Margin="10,2,10,2">
+                    <Label Content="Errors:" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top"
+                           Height="23"
+                           Width="83"/>
+                    <ListBox ItemsSource="{Binding lErrorMessages}" 
+                             RenderTransformOrigin="0.5,0.5" 
+                             Width="245" 
+                             Height="100"
+                             HorizontalAlignment="Left">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Foreground" 
+                                        Value="Red"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel VerticalAlignment="Bottom"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                    <Button Content="Clear Errors"
+                            Margin="0,5,0,0" 
+                            Command="{Binding cmdClearErrors}"/>
+                </StackPanel>
+            </Grid>
         </ScrollViewer>
         
         <!-- RIGHT CONTENT -->
@@ -275,9 +315,9 @@
                                    Visibility="Collapsed" />
                         <Border Grid.Row="1" 
                                 Margin="10,20,30,0" 
-                                BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" 
+                                BorderBrush="Transparent" 
                                 BorderThickness="1" 
-                                Background="{x:Static SystemColors.AppWorkspaceBrush}">
+                                Background="Transparent">
                             <Grid ClipToBounds="True">
                                 
                                 <!-- MAP -->
@@ -381,16 +421,19 @@
                                 <CheckBox Content="Plane Altitude"
                                           IsChecked="{Binding bShowPlaneAltitude}" 
                                           Margin="0,0,20,0"
+                                          Foreground="Red"
                                           Checked="ShowPlaneAltitudeCheckBox_Changed"
                                           Unchecked="ShowPlaneAltitudeCheckBox_Changed"/>
                                 <CheckBox Content="Ground Altitude"
                                           IsChecked="{Binding bShowGroundAltitude}"
                                           Margin="0,0,20,0"
+                                          Foreground="Brown"
                                           Checked="ShowGroundAltitudeCheckBox_Changed"
                                           Unchecked="ShowGroundAltitudeCheckBox_Changed"/>
                                 <CheckBox Content="Water"
                                           IsChecked="{Binding bShowWaterAltitude}"
                                           Margin="0,0,20,0"
+                                          Foreground="DeepSkyBlue"
                                           Checked="ShowWaterAltitudeCheckBox_Changed"
                                           Unchecked="ShowWaterAltitudeCheckBox_Changed"/>
                             </StackPanel>

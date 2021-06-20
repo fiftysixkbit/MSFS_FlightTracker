@@ -1,4 +1,5 @@
-﻿using LiveCharts;
+﻿using ControlzEx.Theming;
+using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Geared;
 using LiveCharts.Wpf;
@@ -79,30 +80,16 @@ namespace MSFS_FlightTracker
 
                 if (simvarVm.bTrackingStarted)
                 {
-                    // Draw circle marker
-                    // Only draw if the plane is moving
-                    if (lastLatitude != null && lastLongitude != null)
+                    // Draw circle marker and update charts
+                    await DrawCircle(latitude, longitude);
+                    if (index % CHART_TICK_INTERVAL == 0)
                     {
-                        if (lastLatitude != latitude || lastLongitude != longitude)
-                        {
-                            await DrawCircle(latitude, longitude);
-                            if (index % CHART_TICK_INTERVAL == 0)
-                            {
-                                await UpdateCharts();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        await DrawCircle (latitude, longitude);
                         await UpdateCharts();
                     }
 
                     // No use for these yet, was thinking of using it to join lines
                     lastLatitude = latitude;
                     lastLongitude = longitude;
-
-                    
                 }
             }
             catch (Exception ex)
@@ -689,6 +676,18 @@ namespace MSFS_FlightTracker
                     }
                 }
             }
+        }
+
+        private void LightThemeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.Current.ChangeTheme(this, "Light.Blue");
+
+        }
+
+        private void DarkThemeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.Current.ChangeTheme(this, "Dark.Blue");
+
         }
     }
 }

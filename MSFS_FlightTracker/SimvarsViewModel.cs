@@ -389,6 +389,13 @@ namespace MSFS_FlightTracker
         }
         private bool m_bTrackingStarted = false;
 
+        public bool bSimRunning
+        {
+            get { return m_bSimRunning; }
+            set { this.SetProperty(ref m_bSimRunning, value); }
+        }
+        private bool m_bSimRunning = false;
+
         public bool bShowPlaneAltitude
         {
             get { return m_bShowPlaneAltitude; }
@@ -440,7 +447,7 @@ namespace MSFS_FlightTracker
         public BaseCommand cmdLoadFiles { get; private set; }
         public BaseCommand cmdSaveImage { get; private set; }
         public BaseCommand cmdOnTickCallback { get; private set; }
-
+        public BaseCommand cmdClearErrors { get; private set; }
 
         public SeriesCollection AltitudeSeries { get; set; }
         public SeriesCollection SpeedSeries { get; set; }
@@ -471,8 +478,8 @@ namespace MSFS_FlightTracker
             cmdAddRequest = new BaseCommand((p) => { AddRequest((m_iIndexRequest == 0) ? m_sSimvarRequest : (m_sSimvarRequest + ":" + m_iIndexRequest), sUnitRequest, bIsString); });
             cmdRemoveSelectedRequest = new BaseCommand((p) => { RemoveSelectedRequest(); });
             cmdTrySetValue = new BaseCommand((p) => { TrySetValue(); });
-            cmdLoadFiles = new BaseCommand((p) => { LoadFiles(); });
             cmdSaveImage = new BaseCommand((p) => { SaveImage(); });
+            cmdClearErrors = new BaseCommand((p) => { ClearErrors(); });
 
             m_oMapTimer.Interval = new TimeSpan(0, 0, 0, 0, MAP_TICK_INTERVAL);
             m_oMapTimer.Tick += new EventHandler(OnTick);
@@ -502,7 +509,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "Water",
                     ToolTip = "Water",
-                    Stroke = Brushes.Blue,
+                    Stroke = Brushes.DeepSkyBlue,
                     PointGeometry = null
                 }
             };
@@ -538,6 +545,11 @@ namespace MSFS_FlightTracker
             cmdOnTickCallback = cmd;
         }
 
+        enum EVENT_ID
+        {
+            SIM
+        };
+
         private void Connect()
         {
             Console.WriteLine("Connect");
@@ -557,6 +569,11 @@ namespace MSFS_FlightTracker
                 /// Catch a simobject data request
                 m_oSimConnect.OnRecvSimobjectDataBytype += new SimConnect.RecvSimobjectDataBytypeEventHandler(SimConnect_OnRecvSimobjectDataBytype);
 
+                //m_oSimConnect.OnRecvSystemState += new SimConnect.RecvSystemStateEventHandler(SimConnect_OnRecvSystemState);
+                m_oSimConnect.OnRecvSystemState += new SimConnect.RecvSystemStateEventHandler(SimConnect_OnRecvSystemState);
+
+                m_oSimConnect.SubscribeToSystemEvent(EVENT_ID.SIM, "Sim");
+
 
                 AddRequest("PLANE ALTITUDE", "feet", false);
                 AddRequest("GROUND ALTITUDE", "feet", false);
@@ -569,14 +586,15 @@ namespace MSFS_FlightTracker
             }
             catch (COMException ex)
             {
-                Console.WriteLine("Connection to KH failed: " + ex.Message);
+                Console.WriteLine(ex.ToString());
+                lErrorMessages.Add("Connection to simulator failed: " + ex.Message);
             }
         }
 
         private void Start()
         {
             bTrackingStarted = true;
-            sStartButtonLabel = "Stop Tracking";
+            sStartButtonLabel = "Pause Tracking";
         }
 
         private void Stop()
@@ -627,6 +645,20 @@ namespace MSFS_FlightTracker
         private void SaveImage()
         {
             //var image = m_mainWindow.tileCanvas.CreateImage();
+        }
+
+        private void ClearErrors()
+        {
+            lErrorMessages.Clear();
+        }
+
+        private void SimConnect_OnRecvSystemState(SimConnect sender, SIMCONNECT_RECV_SYSTEM_STATE data)
+        {
+            if (data.dwRequestID == (int)EVENT_ID.SIM)
+            {
+                bSimRunning = Convert.ToBoolean(data.dwInteger);
+            }
+            
         }
 
         private void SimConnect_OnRecvOpen(SimConnect sender, SIMCONNECT_RECV_OPEN data)
@@ -749,6 +781,8 @@ namespace MSFS_FlightTracker
         {
             //Console.WriteLine("OnTick");
             m_tickIndex++;
+
+            m_oSimConnect.RequestSystemState(EVENT_ID.SIM, "Sim");
 
             cmdOnTickCallback.Execute(m_tickIndex);
 
@@ -883,58 +917,6 @@ namespace MSFS_FlightTracker
                         sValue = m_sSetValue
                     };
                     m_oSimConnect.SetDataOnSimObject(m_oSelectedSimvarRequest.eDef, SimConnect.SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_DATA_SET_FLAG.DEFAULT, sValueStruct);
-                }
-            }
-        }
-
-        private void LoadFiles()
-        {
-            Microsoft.Win32.OpenFileDialog oOpenFileDialog = new Microsoft.Win32.OpenFileDialog();
-            oOpenFileDialog.Multiselect = true;
-            oOpenFileDialog.Filter = "Simvars files (*.simvars)|*.simvars";
-            if (oOpenFileDialog.ShowDialog() == true)
-            {
-                foreach (string sFilename in oOpenFileDialog.FileNames)
-                {
-                    LoadFile(sFilename);
-                }
-            }
-        }
-
-        private void LoadFile(string _sFileName)
-        {
-            string[] aLines = System.IO.File.ReadAllLines(_sFileName);
-            for (uint i = 0; i < aLines.Length; ++i)
-            {
-                // Format : Simvar,Unit
-                string[] aSubStrings = aLines[i].Split(',');
-                if (aSubStrings.Length >= 2) // format check
-                {
-                    // values check
-                    string[] aSimvarSubStrings = aSubStrings[0].Split(':'); // extract Simvar name from format Simvar:Index
-                    string sSimvarName = Array.Find(SimVars.Names, s => s == aSimvarSubStrings[0]);
-                    string sUnitName = Array.Find(Units.Names, s => s == aSubStrings[1]);
-                    bool bIsString = aSubStrings.Length > 2 && bool.Parse(aSubStrings[2]);
-                    if (sSimvarName != null && (sUnitName != null || bIsString))
-                    {
-                        AddRequest(aSubStrings[0], sUnitName, bIsString);
-                    }
-                    else
-                    {
-                        if (sSimvarName == null)
-                        {
-                            lErrorMessages.Add("l." + i.ToString() + " Wrong Simvar name : " + aSubStrings[0]);
-                        }
-                        if (sUnitName == null)
-                        {
-                            lErrorMessages.Add("l." + i.ToString() + " Wrong Unit name : " + aSubStrings[1]);
-                        }
-                    }
-                }
-                else
-                {
-                    lErrorMessages.Add("l." + i.ToString() + " Bad input format : " + aLines[i]);
-                    lErrorMessages.Add("l." + i.ToString() + " Must be : SIMVAR,UNIT");
                 }
             }
         }
