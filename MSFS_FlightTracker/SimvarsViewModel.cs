@@ -493,7 +493,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "Plane Altitude",
                     ToolTip = "Plane Altitude",
-                    Stroke = Brushes.Red,
+                    Stroke = Brushes.OrangeRed,
                     PointGeometry = null
                 },
                 new GLineSeries
@@ -501,7 +501,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "Ground Altitude",
                     ToolTip = "Ground Altitude",
-                    Stroke = Brushes.Brown,
+                    Stroke = Brushes.SaddleBrown,
                     PointGeometry = null
                 },
                 new GLineSeries
@@ -509,7 +509,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "Water",
                     ToolTip = "Water",
-                    Stroke = Brushes.DeepSkyBlue,
+                    Stroke = Brushes.DodgerBlue,
                     PointGeometry = null
                 }
             };
@@ -521,6 +521,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "True Airspeed",
                     ToolTip = "True Airspeed",
+                    Stroke = Brushes.YellowGreen,
                     PointGeometry = null
                 },
                 new GLineSeries
@@ -528,6 +529,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "Indicated Airspeed",
                     ToolTip = "Indicated Airspeed",
+                    Stroke = Brushes.Teal,
                     PointGeometry = null
                 },
                 new GLineSeries
@@ -535,6 +537,7 @@ namespace MSFS_FlightTracker
                     Values = new GearedValues<double>(),
                     Title = "Ground Speed",
                     ToolTip = "Ground Speed",
+                    Stroke = Brushes.DarkOrange,
                     PointGeometry = null
                 }
             };

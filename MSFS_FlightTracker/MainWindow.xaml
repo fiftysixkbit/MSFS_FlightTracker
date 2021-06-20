@@ -23,12 +23,12 @@
         <ScrollViewer>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="85" />
-                    <RowDefinition Height="65" />
-                    <RowDefinition Height="180" />
-                    <RowDefinition Height="150" />
-                    <RowDefinition Height="200" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!-- CONNECT -->
@@ -41,7 +41,7 @@
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
                             Margin="0,0,10,0"
-                            Width="110" 
+                            Width="240" 
                             Height="35"/>
 
 
@@ -125,7 +125,7 @@
                 <!-- TRACKING CONTROLS -->
                 <StackPanel Orientation="Horizontal" 
                             Grid.Row="2"
-                            Margin="10,2,10,2">
+                            Margin="10">
                     <Button x:Name="btn_Start" 
                             Content="{Binding sStartButtonLabel}" 
                             Command="{Binding cmdToggleStart}" 
@@ -133,14 +133,14 @@
                             Margin="0,0,10,0"
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Width="110" 
+                            Width="115" 
                             Height="35"/>
                     <Button x:Name="btn_Reset" 
                             Content="Reset" 
                             Command="{Binding cmdReset}" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Width="110" 
+                            Width="115" 
                             Height="35"/>
                 </StackPanel>
 
@@ -153,6 +153,10 @@
                            VerticalAlignment="Center"
                            Height="26"
                            Width="83"/>
+                    <CheckBox Content="Follow Aircraft"
+                              Margin="5"
+                              IsEnabled="{Binding bConnected}"
+                              IsChecked="{Binding bFollowMap}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="btn_Recenter" 
                                 Content="Recenter" 
@@ -162,7 +166,7 @@
                                 VerticalAlignment="Center" 
                                 Margin="0,0,10,0"
                                 Width="80" 
-                                Height="25" />
+                                Height="28" />
                         <Button x:Name="btn_SaveImage" 
                                 Content="Save Image" 
                                 Command="{Binding cmdSaveImage}" 
@@ -170,12 +174,9 @@
                                 VerticalAlignment="Center" 
                                 IsEnabled="False"
                                 Width="80" 
-                                Height="25" />
+                                Height="28" />
                     </StackPanel>
-                    <CheckBox Content="Follow"
-                              Margin="0,5,0,0"
-                              IsEnabled="{Binding bConnected}"
-                              IsChecked="{Binding bFollowMap}"/>
+                    
 
                     <Label Content="UI Theme:"
                            Margin="0,10,0,0"/>
@@ -193,79 +194,123 @@
                 </StackPanel>
 
                 <!-- VALUES -->
-                <StackPanel Grid.Row="4" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,0,10,0">
-                        <Label Content="Plane Altitude:" 
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Height="33" 
-                               Width="100"/>
-                        <Label Content="{Binding bPlaneAltitudeStr}"
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top" 
-                               Height="33"
-                               Width="83"/>
+                <Expander Grid.Row="4"
+                          Header="Show values"
+                          Expanded="ValuesExpander_Expanded"
+                          Collapsed="ValuesExpander_Collapsed">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,0,10,0">
+                            <Label Content="Plane Altitude:" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Height="33" 
+                                   Width="100"/>
+                            <Label Content="{Binding bPlaneAltitudeStr}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33"
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="Ground Altitude:" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Height="33" 
+                                   Width="100"/>
+                            <Label Content="{Binding bGroundAltitudeStr}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33"
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="Longitude:" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="100"/>
+                            <Label Content="{Binding bLongitudeStr}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="Latitude:" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="100"/>
+                            <Label Content="{Binding bLatitudeStr}" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33" 
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="Heading:" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="100"/>
+                            <Label Content="{Binding bHeadingStr}" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33" 
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="Indicated Airspeed:" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="110"/>
+                            <Label Content="{Binding bAirspeedIndicatedStr}" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33" 
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="True Airspeed:" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="100"/>
+                            <Label Content="{Binding bAirspeedTrueStr}" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33" 
+                                   Width="83"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,-8,10,0">
+                            <Label Content="Ground Speed:" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="33"
+                                   Width="100"/>
+                            <Label Content="{Binding bGroundSpeedStr}" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" 
+                                   Height="33" 
+                                   Width="83"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,-8,10,0">
-                        <Label Content="Ground Altitude:" 
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Height="33" 
-                               Width="100"/>
-                        <Label Content="{Binding bGroundAltitudeStr}"
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top" 
-                               Height="33"
-                               Width="83"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,-8,10,0">
-                        <Label Content="Longitude:" 
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Height="33"
-                               Width="100"/>
-                        <Label Content="{Binding bLongitudeStr}"
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top"
-                               Height="33"
-                               Width="83"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,-8,10,0">
-                        <Label Content="Latitude:" 
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top"
-                               Height="33"
-                               Width="100"/>
-                        <Label Content="{Binding bLatitudeStr}" 
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top" 
-                               Height="33" 
-                               Width="83"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,-8,10,0">
-                        <Label Content="Heading:" 
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top"
-                               Height="33"
-                               Width="100"/>
-                        <Label Content="{Binding bHeadingStr}" 
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Top" 
-                               Height="33" 
-                               Width="83"/>
-                    </StackPanel>
-                </StackPanel>
+                </Expander>
 
                 <!-- ERRORS -->
                 <StackPanel Grid.Row="5"
                             Orientation="Vertical"
                             VerticalAlignment="Bottom"
-                            Margin="10,2,10,2">
+                            Margin="10,10,10,2">
                     <Label Content="Errors:" 
                            HorizontalAlignment="Left" 
                            VerticalAlignment="Top"
@@ -284,7 +329,7 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VirtualizingStackPanel VerticalAlignment="Bottom"/>
+                                <VirtualizingStackPanel VerticalAlignment="Top"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
@@ -392,11 +437,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="40" />
+                                <RowDefinition Height="50" />
 
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="40" />
+                                <RowDefinition Height="50" />
                             </Grid.RowDefinitions>
 
                             <Label Content="Altitude"
@@ -416,26 +461,49 @@
                                 </lvc:CartesianChart.AxisY>
                             </lvc:CartesianChart>
 
-                            <StackPanel Orientation="Horizontal"
-                                        Grid.Row="2" >
-                                <CheckBox Content="Plane Altitude"
-                                          IsChecked="{Binding bShowPlaneAltitude}" 
-                                          Margin="0,0,20,0"
-                                          Foreground="Red"
-                                          Checked="ShowPlaneAltitudeCheckBox_Changed"
-                                          Unchecked="ShowPlaneAltitudeCheckBox_Changed"/>
-                                <CheckBox Content="Ground Altitude"
-                                          IsChecked="{Binding bShowGroundAltitude}"
-                                          Margin="0,0,20,0"
-                                          Foreground="Brown"
-                                          Checked="ShowGroundAltitudeCheckBox_Changed"
-                                          Unchecked="ShowGroundAltitudeCheckBox_Changed"/>
-                                <CheckBox Content="Water"
-                                          IsChecked="{Binding bShowWaterAltitude}"
-                                          Margin="0,0,20,0"
-                                          Foreground="DeepSkyBlue"
-                                          Checked="ShowWaterAltitudeCheckBox_Changed"
-                                          Unchecked="ShowWaterAltitudeCheckBox_Changed"/>
+                            <StackPanel Grid.Row="2"
+                                        Orientation="Vertical"
+                                        Margin="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="Aircraft Altitude"
+                                              IsChecked="{Binding bShowPlaneAltitude}" 
+                                              Width="140"
+                                              Checked="ShowPlaneAltitudeCheckBox_Changed"
+                                              Unchecked="ShowPlaneAltitudeCheckBox_Changed"/>
+                                    <CheckBox Content="Ground Altitude"
+                                              IsChecked="{Binding bShowGroundAltitude}"
+                                              Width="140"
+                                              Checked="ShowGroundAltitudeCheckBox_Changed"
+                                              Unchecked="ShowGroundAltitudeCheckBox_Changed"/>
+                                    <CheckBox Content="Water"
+                                              IsChecked="{Binding bShowWaterAltitude}"
+                                              Width="140"
+                                              Checked="ShowWaterAltitudeCheckBox_Changed"
+                                              Unchecked="ShowWaterAltitudeCheckBox_Changed"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="OrangeRed"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="SaddleBrown"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="DodgerBlue"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                </StackPanel>
                             </StackPanel>
 
                             <Label Content="Speed"
@@ -455,23 +523,49 @@
                                 </lvc:CartesianChart.AxisY>
                             </lvc:CartesianChart>
 
-                            <StackPanel Orientation="Horizontal"
-                                        Grid.Row="5" >
-                                <CheckBox Content="True Airspeed"
-                                          IsChecked="{Binding bShowAirspeedTrue}" 
-                                          Margin="0,0,20,0"
-                                          Checked="ShowAirspeedTrueCheckBox_Changed"
-                                          Unchecked="ShowAirspeedTrueCheckBox_Changed"/>
-                                <CheckBox Content="Indicated Airspeed"
-                                          IsChecked="{Binding bShowAirspeedIndicated}"
-                                          Margin="0,0,20,0"
-                                          Checked="ShowAirspeedIndicatedCheckBox_Changed"
-                                          Unchecked="ShowAirspeedIndicatedCheckBox_Changed"/>
-                                <CheckBox Content="Ground Speed"
-                                          IsChecked="{Binding bShowGroundSpeed}"
-                                          Margin="0,0,20,0"
-                                          Checked="ShowGroundSpeedCheckBox_Changed"
-                                          Unchecked="ShowGroundSpeedCheckBox_Changed"/>
+                            <StackPanel Grid.Row="5"
+                                        Orientation="Vertical"
+                                        Margin="10">
+                                <StackPanel Orientation="Horizontal" >
+                                    <CheckBox Content="True Airspeed"
+                                              IsChecked="{Binding bShowAirspeedTrue}" 
+                                              Width="140"
+                                              Checked="ShowAirspeedTrueCheckBox_Changed"
+                                              Unchecked="ShowAirspeedTrueCheckBox_Changed"/>
+                                    <CheckBox Content="Indicated Airspeed"
+                                              IsChecked="{Binding bShowAirspeedIndicated}"
+                                              Width="140"
+                                              Checked="ShowAirspeedIndicatedCheckBox_Changed"
+                                              Unchecked="ShowAirspeedIndicatedCheckBox_Changed"/>
+                                    <CheckBox Content="Ground Speed"
+                                              IsChecked="{Binding bShowGroundSpeed}"
+                                              Width="140"
+                                              Checked="ShowGroundSpeedCheckBox_Changed"
+                                              Unchecked="ShowGroundSpeedCheckBox_Changed"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="YellowGreen"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="Teal"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="DarkOrange"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                </StackPanel>
                             </StackPanel>
 
                         </Grid>

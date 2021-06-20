@@ -689,5 +689,17 @@ namespace MSFS_FlightTracker
             ThemeManager.Current.ChangeTheme(this, "Dark.Blue");
 
         }
+
+        private void ValuesExpander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            var expander = (Expander)sender;
+            expander.Header = "Show Values";
+        }
+
+        private void ValuesExpander_Expanded(object sender, RoutedEventArgs e)
+        {
+            var expander = (Expander)sender;
+            expander.Header = "Hide Values";
+        }
     }
 }
