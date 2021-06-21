@@ -430,7 +430,8 @@
                                 </TextBlock>
                             </Grid>
                         </Border>
-                        <StatusBar Grid.Row="2">
+                        <StatusBar Grid.Row="2"
+                                   Background="{mah:StaticResource MahApps.Brushes.ThemeBackground}">
                             <ProgressBar x:Name="progress" Width="100" Height="15" Visibility="Hidden" />
                             <TextBlock x:Name="label" Visibility="Hidden" />
                         </StatusBar>
