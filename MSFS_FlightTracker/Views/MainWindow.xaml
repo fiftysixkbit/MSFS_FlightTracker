@@ -145,67 +145,71 @@
                 </StackPanel>
 
                 <!-- MAP CONTROLS -->
-                <StackPanel Orientation="Vertical" 
-                            Grid.Row="3"
-                            Margin="10,2,10,2">
-                    <Label Content="Map Controls:" 
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Center"
-                           Height="26"
-                           Width="83"/>
-                    <CheckBox Content="Follow Aircraft"
-                              Margin="5"
-                              IsEnabled="{Binding bConnected}"
-                              IsChecked="{Binding bFollowMap}"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="btn_Recenter" 
-                                Content="Recenter" 
-                                Command="{Binding cmdRecenter}" 
-                                IsEnabled="{Binding bConnected}"
-                                HorizontalAlignment="Left" 
-                                VerticalAlignment="Center" 
-                                Margin="0,0,10,0"
-                                Width="80" 
-                                Height="28" />
-                        <Button x:Name="btn_SaveImage" 
-                                Content="Save Image" 
-                                Command="{Binding cmdSaveImage}" 
-                                HorizontalAlignment="Left" 
-                                VerticalAlignment="Center" 
-                                IsEnabled="False"
-                                Width="80" 
-                                Height="28" />
-                    </StackPanel>
+                <Expander Grid.Row="3"
+                          Header="Settings"
+                          BorderThickness="0"
+                          IsExpanded="True">
+                    <StackPanel Orientation="Vertical" 
+                                Margin="10,0,10,0">
+                        <Label Content="Map Controls:" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center"
+                               Height="26"
+                               Width="83"/>
+                        <CheckBox Content="Follow Aircraft"
+                                  Margin="5"
+                                  IsEnabled="{Binding bConnected}"
+                                  IsChecked="{Binding bFollowMap}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btn_Recenter" 
+                                    Content="Recenter" 
+                                    Command="{Binding cmdRecenter}" 
+                                    IsEnabled="{Binding bConnected}"
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center" 
+                                    Margin="0,0,10,0"
+                                    Width="80" 
+                                    Height="28" />
+                            <Button x:Name="btn_SaveImage" 
+                                    Content="Save Image" 
+                                    Command="{Binding cmdSaveImage}" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center" 
+                                    IsEnabled="False"
+                                    Width="80" 
+                                    Height="28" />
+                        </StackPanel>
                     
 
-                    <Label Content="UI Theme:"
-                           Margin="0,10,0,0"/>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="5, 0, 10, 10">
-                        <RadioButton Content="Light"
-                                     Margin="0,0,15,0"
-                                     IsChecked="True"
-                                     Checked="LightThemeRadioButton_Checked"
-                                     GroupName="ThemeRadioButtons" />
-                        <RadioButton Content="Dark"
-                                     Checked="DarkThemeRadioButton_Checked"
-                                     GroupName="ThemeRadioButtons" />
+                        <Label Content="UI Theme:"
+                               Margin="0,10,0,0"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="5, 0, 10, 10">
+                            <RadioButton Content="Light"
+                                         Margin="0,0,15,0"
+                                         IsChecked="True"
+                                         Checked="LightThemeRadioButton_Checked"
+                                         GroupName="ThemeRadioButtons" />
+                            <RadioButton Content="Dark"
+                                         Checked="DarkThemeRadioButton_Checked"
+                                         GroupName="ThemeRadioButtons" />
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </Expander>
 
                 <!-- VALUES -->
                 <Expander Grid.Row="4"
-                          Header="Show values"
-                          Expanded="ValuesExpander_Expanded"
-                          Collapsed="ValuesExpander_Collapsed">
+                          Header="Values"
+                          BorderThickness="0"
+                          IsExpanded="True">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal"
                                     Margin="10,0,10,0">
-                            <Label Content="Plane Altitude:" 
+                            <Label Content="Aircraft Altitude:" 
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    Height="33" 
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bPlaneAltitudeStr}"
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top" 
@@ -213,12 +217,12 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="Ground Altitude:" 
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    Height="33" 
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bGroundAltitudeStr}"
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top" 
@@ -226,12 +230,12 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="Longitude:" 
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    Height="33"
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bLongitudeStr}"
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
@@ -239,12 +243,12 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="Latitude:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
                                    Height="33"
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bLatitudeStr}" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top" 
@@ -252,12 +256,12 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="Heading:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
                                    Height="33"
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bHeadingStr}" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top" 
@@ -265,7 +269,7 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="Indicated Airspeed:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
@@ -278,12 +282,12 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="True Airspeed:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
                                    Height="33"
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bAirspeedTrueStr}" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top" 
@@ -291,12 +295,12 @@
                                    Width="83"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,-8,10,0">
+                                    Margin="10,-12,10,0">
                             <Label Content="Ground Speed:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
                                    Height="33"
-                                   Width="100"/>
+                                   Width="110"/>
                             <Label Content="{Binding bGroundSpeedStr}" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top" 
@@ -307,36 +311,38 @@
                 </Expander>
 
                 <!-- ERRORS -->
-                <StackPanel Grid.Row="5"
-                            Orientation="Vertical"
-                            VerticalAlignment="Bottom"
-                            Margin="10,10,10,2">
-                    <Label Content="Errors:" 
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top"
-                           Height="23"
-                           Width="83"/>
-                    <ListBox ItemsSource="{Binding lErrorMessages}" 
-                             RenderTransformOrigin="0.5,0.5" 
-                             Width="245" 
-                             Height="100"
-                             HorizontalAlignment="Left">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="Foreground" 
-                                        Value="Red"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel VerticalAlignment="Top"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                    </ListBox>
-                    <Button Content="Clear Errors"
-                            Margin="0,5,0,0" 
-                            Command="{Binding cmdClearErrors}"/>
-                </StackPanel>
+                <Expander Grid.Row="5"
+                          Header="Errors"
+                          BorderThickness="0"
+                          IsExpanded="True">
+                    <StackPanel Grid.Row="5"
+                                Orientation="Vertical"
+                                VerticalAlignment="Bottom"
+                                Margin="10,0,10,0">
+                        <ListBox ItemsSource="{Binding lErrorMessages}" 
+                                 RenderTransformOrigin="0.5,0.5" 
+                                 BorderThickness="1"
+                                 BorderBrush="LightGray"
+                                 Width="238" 
+                                 Height="100"
+                                 HorizontalAlignment="Left">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Foreground" 
+                                            Value="Red"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VerticalAlignment="Top"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <Button Content="Clear Errors"
+                                Margin="0,5,0,0" 
+                                Command="{Binding cmdClearErrors}"/>
+                    </StackPanel>
+                </Expander>
             </Grid>
         </ScrollViewer>
         

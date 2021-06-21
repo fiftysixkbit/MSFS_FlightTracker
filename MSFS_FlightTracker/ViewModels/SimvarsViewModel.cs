@@ -131,6 +131,7 @@ namespace MSFS_FlightTracker
 
             sConnectButtonLabel = "Connect";
             bConnected = false;
+            bSimRunning = false;
 
             // Set all requests as pending
             foreach (SimvarRequest oSimvarRequest in lSimvarRequests)
