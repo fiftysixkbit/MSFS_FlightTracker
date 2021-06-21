@@ -186,11 +186,12 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="5, 0, 10, 10">
                             <RadioButton Content="Light"
+                                         x:Name="LightThemeRadioButton"
                                          Margin="0,0,15,0"
-                                         IsChecked="True"
                                          Checked="LightThemeRadioButton_Checked"
                                          GroupName="ThemeRadioButtons" />
                             <RadioButton Content="Dark"
+                                         x:Name="DarkThemeRadioButton"
                                          Checked="DarkThemeRadioButton_Checked"
                                          GroupName="ThemeRadioButtons" />
                         </StackPanel>

@@ -1,18 +1,14 @@
 ﻿using ControlzEx.Theming;
-using LiveCharts;
-using LiveCharts.Defaults;
 using LiveCharts.Geared;
-using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
 using MapControl;
+using MSFS_FlightTracker.Properties;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -51,11 +47,24 @@ namespace MSFS_FlightTracker
             simvarVm = (SimvarsViewModel)DataContext;
             simvarVm.SetOnTickCallback(new BaseCommand(async (p) => { await SimvarOnTickAsync(p); }));
 
+            // Set initial values
+            int theme = Settings.Default.UITheme;
+             
+            if (theme == 0)
+            {
+                ThemeManager.Current.ChangeTheme(this, "Light.Blue");
+                LightThemeRadioButton.IsChecked = true;
+            }
+            else if (theme == 1)
+            {
+                ThemeManager.Current.ChangeTheme(this, "Dark.Blue");
+                DarkThemeRadioButton.IsChecked = true;
+            }
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            CenterOnLatLong(44.837788, -0.579180);
+            CenterOnLatLong(44.837788, -0.579180, 2);
         }
 
         private async Task<Task> SimvarOnTickAsync(object param)
@@ -681,13 +690,15 @@ namespace MSFS_FlightTracker
         private void LightThemeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             ThemeManager.Current.ChangeTheme(this, "Light.Blue");
-
+            Settings.Default.UITheme = 0;
+            Settings.Default.Save();
         }
 
         private void DarkThemeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             ThemeManager.Current.ChangeTheme(this, "Dark.Blue");
-
+            Settings.Default.UITheme = 1;
+            Settings.Default.Save();
         }
     }
 }

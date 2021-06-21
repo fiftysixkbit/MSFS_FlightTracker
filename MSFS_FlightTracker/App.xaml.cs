@@ -1,10 +1,4 @@
-﻿using ControlzEx.Theming;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MSFS_FlightTracker.Properties;
 using System.Windows;
 
 namespace MSFS_FlightTracker
@@ -18,6 +12,13 @@ namespace MSFS_FlightTracker
         {
             base.OnStartup(e);
 
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Settings.Default.Save();
+
+            base.OnExit(e);
         }
     }
 }
