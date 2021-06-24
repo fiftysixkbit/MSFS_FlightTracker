@@ -156,10 +156,6 @@
                                VerticalAlignment="Center"
                                Height="26"
                                Width="83"/>
-                        <CheckBox Content="Follow Aircraft"
-                                  Margin="5"
-                                  IsEnabled="{Binding bConnected}"
-                                  IsChecked="{Binding bFollowMap}"/>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="btn_Recenter" 
                                     Content="Recenter" 
@@ -169,15 +165,11 @@
                                     VerticalAlignment="Center" 
                                     Margin="0,0,10,0"
                                     Width="80" 
-                                    Height="28" />
-                            <Button x:Name="btn_SaveImage" 
-                                    Content="Save Image" 
-                                    Command="{Binding cmdSaveImage}" 
-                                    HorizontalAlignment="Left" 
-                                    VerticalAlignment="Center" 
-                                    IsEnabled="False"
-                                    Width="80" 
-                                    Height="28" />
+                                    Height="30" />
+                            <CheckBox Content="Follow Aircraft"
+                                  Margin="5"
+                                  IsEnabled="{Binding bConnected}"
+                                  IsChecked="{Binding bFollowMap}"/>
                         </StackPanel>
                     
 
@@ -352,7 +344,7 @@
             <TabControl>
                 <!-- MAP TAB -->
                 <TabItem Header="Map">
-                    <Grid Background="{x:Static SystemColors.ControlBrush}" >
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -366,7 +358,7 @@
                                    Padding="2,1" 
                                    Visibility="Collapsed" />
                         <Border Grid.Row="1" 
-                                Margin="10,20,30,0" 
+                                Margin="0" 
                                 BorderBrush="Transparent" 
                                 BorderThickness="1" 
                                 Background="Transparent">
@@ -431,7 +423,7 @@
                             </Grid>
                         </Border>
                         <StatusBar Grid.Row="2"
-                                   Background="{mah:StaticResource MahApps.Brushes.ThemeBackground}">
+                                   Background="Transparent">
                             <ProgressBar x:Name="progress" Width="100" Height="15" Visibility="Hidden" />
                             <TextBlock x:Name="label" Visibility="Hidden" />
                         </StatusBar>
@@ -450,6 +442,12 @@
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="50" />
+
+                                <!--
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="50" />
+                                -->
                             </Grid.RowDefinitions>
 
                             <Label Content="Altitude"
@@ -483,7 +481,7 @@
                                               Width="140"
                                               Checked="ShowGroundAltitudeCheckBox_Changed"
                                               Unchecked="ShowGroundAltitudeCheckBox_Changed"/>
-                                    <CheckBox Content="Water"
+                                    <CheckBox Content="Sea Level"
                                               IsChecked="{Binding bShowWaterAltitude}"
                                               Width="140"
                                               Checked="ShowWaterAltitudeCheckBox_Changed"
@@ -576,6 +574,69 @@
                                 </StackPanel>
                             </StackPanel>
 
+                            <!--
+                            <Label Content="Aircraft"
+                                   Grid.Row="6" 
+                                   FontSize="18"/>
+                            <lvc:CartesianChart Grid.Row="7"
+                                                Height="250" 
+                                                Series="{Binding AircraftSeries}" 
+                                                DisableAnimations="True"
+                                                Hoverable="False"
+                                                DataTooltip="{x:Null}">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis IsMerged="True" FontSize="14"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+
+                            <StackPanel Grid.Row="8"
+                                        Orientation="Vertical"
+                                        Margin="10">
+                                <StackPanel Orientation="Horizontal" >
+                                    <CheckBox Content="True Airspeed"
+                                              IsChecked="{Binding bShowAirspeedTrue}" 
+                                              Width="140"
+                                              Checked="ShowAirspeedTrueCheckBox_Changed"
+                                              Unchecked="ShowAirspeedTrueCheckBox_Changed"/>
+                                    <CheckBox Content="Indicated Airspeed"
+                                              IsChecked="{Binding bShowAirspeedIndicated}"
+                                              Width="140"
+                                              Checked="ShowAirspeedIndicatedCheckBox_Changed"
+                                              Unchecked="ShowAirspeedIndicatedCheckBox_Changed"/>
+                                    <CheckBox Content="Ground Speed"
+                                              IsChecked="{Binding bShowGroundSpeed}"
+                                              Width="140"
+                                              Checked="ShowGroundSpeedCheckBox_Changed"
+                                              Unchecked="ShowGroundSpeedCheckBox_Changed"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="YellowGreen"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="Teal"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                    <Canvas Height="10"
+                                            Width="140">
+                                        <Line X1="0" Y1="5"
+                                              X2="120" Y2="5"
+                                              Stroke="DarkOrange"
+                                              StrokeThickness="3" />
+                                    </Canvas>
+                                </StackPanel>
+                            </StackPanel>
+                            -->
                         </Grid>
                     </ScrollViewer>
                 </TabItem>

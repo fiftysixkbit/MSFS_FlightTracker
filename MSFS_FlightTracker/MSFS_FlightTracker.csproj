@@ -14,25 +14,24 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>MSFS Flight Tracker</ProductName>
+    <PublisherName>Benjamin Yip</PublisherName>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -54,25 +53,20 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>5F6AFC329B5F1DD728BDA015EAD4CD8316DB343D</ManifestCertificateThumbprint>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
+  <PropertyGroup>
+    <ManifestKeyFile>MSFS_FlightTracker_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
@@ -129,6 +123,7 @@
       <DependentUpon>SearchControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimConnect\IBaseSimConnectWrapper.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="ViewModels\SimvarsViewModel.cs" />
     <Compile Include="SimConnect\textsimvars.cs" />
     <Compile Include="SimConnect\units.cs" />
@@ -175,6 +170,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="MSFS_FlightTracker_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -185,83 +181,99 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\ic_airplane_010.png" />
-    <Resource Include="images\ic_airplane_020.png" />
-    <Resource Include="images\ic_airplane_030.png" />
-    <Resource Include="images\ic_airplane_040.png" />
-    <Resource Include="images\ic_airplane_050.png" />
-    <Resource Include="images\ic_airplane_060.png" />
-    <Resource Include="images\ic_airplane_070.png" />
-    <Resource Include="images\ic_airplane_080.png" />
-    <Resource Include="images\ic_airplane_090.png" />
-    <Resource Include="images\ic_airplane_100.png" />
-    <Resource Include="images\ic_airplane_110.png" />
-    <Resource Include="images\ic_airplane_120.png" />
-    <Resource Include="images\ic_airplane_130.png" />
-    <Resource Include="images\ic_airplane_140.png" />
-    <Resource Include="images\ic_airplane_150.png" />
-    <Resource Include="images\ic_airplane_160.png" />
-    <Resource Include="images\ic_airplane_170.png" />
-    <Resource Include="images\ic_airplane_180.png" />
-    <Resource Include="images\ic_airplane_190.png" />
-    <Resource Include="images\ic_airplane_200.png" />
-    <Resource Include="images\ic_airplane_210.png" />
-    <Resource Include="images\ic_airplane_220.png" />
-    <Resource Include="images\ic_airplane_230.png" />
-    <Resource Include="images\ic_airplane_240.png" />
-    <Resource Include="images\ic_airplane_250.png" />
-    <Resource Include="images\ic_airplane_260.png" />
-    <Resource Include="images\ic_airplane_270.png" />
-    <Resource Include="images\ic_airplane_280.png" />
-    <Resource Include="images\ic_airplane_290.png" />
-    <Resource Include="images\ic_airplane_300.png" />
-    <Resource Include="images\ic_airplane_310.png" />
-    <Resource Include="images\ic_airplane_320.png" />
-    <Resource Include="images\ic_airplane_330.png" />
-    <Resource Include="images\ic_airplane_340.png" />
-    <Resource Include="images\ic_airplane_350.png" />
-    <Resource Include="images\ic_airplane_360.png" />
+    <Resource Include="Images\ic_airplane_010.png" />
+    <Resource Include="Images\ic_airplane_020.png" />
+    <Resource Include="Images\ic_airplane_030.png" />
+    <Resource Include="Images\ic_airplane_040.png" />
+    <Resource Include="Images\ic_airplane_050.png" />
+    <Resource Include="Images\ic_airplane_060.png" />
+    <Resource Include="Images\ic_airplane_070.png" />
+    <Resource Include="Images\ic_airplane_080.png" />
+    <Resource Include="Images\ic_airplane_090.png" />
+    <Resource Include="Images\ic_airplane_100.png" />
+    <Resource Include="Images\ic_airplane_110.png" />
+    <Resource Include="Images\ic_airplane_120.png" />
+    <Resource Include="Images\ic_airplane_130.png" />
+    <Resource Include="Images\ic_airplane_140.png" />
+    <Resource Include="Images\ic_airplane_150.png" />
+    <Resource Include="Images\ic_airplane_160.png" />
+    <Resource Include="Images\ic_airplane_170.png" />
+    <Resource Include="Images\ic_airplane_180.png" />
+    <Resource Include="Images\ic_airplane_190.png" />
+    <Resource Include="Images\ic_airplane_200.png" />
+    <Resource Include="Images\ic_airplane_210.png" />
+    <Resource Include="Images\ic_airplane_220.png" />
+    <Resource Include="Images\ic_airplane_230.png" />
+    <Resource Include="Images\ic_airplane_240.png" />
+    <Resource Include="Images\ic_airplane_250.png" />
+    <Resource Include="Images\ic_airplane_260.png" />
+    <Resource Include="Images\ic_airplane_270.png" />
+    <Resource Include="Images\ic_airplane_280.png" />
+    <Resource Include="Images\ic_airplane_290.png" />
+    <Resource Include="Images\ic_airplane_300.png" />
+    <Resource Include="Images\ic_airplane_310.png" />
+    <Resource Include="Images\ic_airplane_320.png" />
+    <Resource Include="Images\ic_airplane_330.png" />
+    <Resource Include="Images\ic_airplane_340.png" />
+    <Resource Include="Images\ic_airplane_350.png" />
+    <Resource Include="Images\ic_airplane_360.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\ic_airplane_005.png" />
-    <Resource Include="images\ic_airplane_015.png" />
-    <Resource Include="images\ic_airplane_025.png" />
-    <Resource Include="images\ic_airplane_035.png" />
-    <Resource Include="images\ic_airplane_045.png" />
-    <Resource Include="images\ic_airplane_055.png" />
-    <Resource Include="images\ic_airplane_065.png" />
-    <Resource Include="images\ic_airplane_075.png" />
-    <Resource Include="images\ic_airplane_085.png" />
-    <Resource Include="images\ic_airplane_095.png" />
-    <Resource Include="images\ic_airplane_105.png" />
-    <Resource Include="images\ic_airplane_115.png" />
-    <Resource Include="images\ic_airplane_125.png" />
-    <Resource Include="images\ic_airplane_135.png" />
-    <Resource Include="images\ic_airplane_145.png" />
-    <Resource Include="images\ic_airplane_155.png" />
-    <Resource Include="images\ic_airplane_165.png" />
-    <Resource Include="images\ic_airplane_175.png" />
-    <Resource Include="images\ic_airplane_185.png" />
-    <Resource Include="images\ic_airplane_195.png" />
-    <Resource Include="images\ic_airplane_205.png" />
-    <Resource Include="images\ic_airplane_215.png" />
-    <Resource Include="images\ic_airplane_225.png" />
-    <Resource Include="images\ic_airplane_235.png" />
-    <Resource Include="images\ic_airplane_245.png" />
-    <Resource Include="images\ic_airplane_255.png" />
-    <Resource Include="images\ic_airplane_265.png" />
-    <Resource Include="images\ic_airplane_275.png" />
-    <Resource Include="images\ic_airplane_285.png" />
-    <Resource Include="images\ic_airplane_295.png" />
-    <Resource Include="images\ic_airplane_305.png" />
-    <Resource Include="images\ic_airplane_315.png" />
-    <Resource Include="images\ic_airplane_325.png" />
-    <Resource Include="images\ic_airplane_335.png" />
-    <Resource Include="images\ic_airplane_345.png" />
-    <Resource Include="images\ic_airplane_355.png" />
+    <Resource Include="Images\ic_airplane_005.png" />
+    <Resource Include="Images\ic_airplane_015.png" />
+    <Resource Include="Images\ic_airplane_025.png" />
+    <Resource Include="Images\ic_airplane_035.png" />
+    <Resource Include="Images\ic_airplane_045.png" />
+    <Resource Include="Images\ic_airplane_055.png" />
+    <Resource Include="Images\ic_airplane_065.png" />
+    <Resource Include="Images\ic_airplane_075.png" />
+    <Resource Include="Images\ic_airplane_085.png" />
+    <Resource Include="Images\ic_airplane_095.png" />
+    <Resource Include="Images\ic_airplane_105.png" />
+    <Resource Include="Images\ic_airplane_115.png" />
+    <Resource Include="Images\ic_airplane_125.png" />
+    <Resource Include="Images\ic_airplane_135.png" />
+    <Resource Include="Images\ic_airplane_145.png" />
+    <Resource Include="Images\ic_airplane_155.png" />
+    <Resource Include="Images\ic_airplane_165.png" />
+    <Resource Include="Images\ic_airplane_175.png" />
+    <Resource Include="Images\ic_airplane_185.png" />
+    <Resource Include="Images\ic_airplane_195.png" />
+    <Resource Include="Images\ic_airplane_205.png" />
+    <Resource Include="Images\ic_airplane_215.png" />
+    <Resource Include="Images\ic_airplane_225.png" />
+    <Resource Include="Images\ic_airplane_235.png" />
+    <Resource Include="Images\ic_airplane_245.png" />
+    <Resource Include="Images\ic_airplane_255.png" />
+    <Resource Include="Images\ic_airplane_265.png" />
+    <Resource Include="Images\ic_airplane_275.png" />
+    <Resource Include="Images\ic_airplane_285.png" />
+    <Resource Include="Images\ic_airplane_295.png" />
+    <Resource Include="Images\ic_airplane_305.png" />
+    <Resource Include="Images\ic_airplane_315.png" />
+    <Resource Include="Images\ic_airplane_325.png" />
+    <Resource Include="Images\ic_airplane_335.png" />
+    <Resource Include="Images\ic_airplane_345.png" />
+    <Resource Include="Images\ic_airplane_355.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Utils\" />
+    <Resource Include="icon.ico" />
+    <Content Include="SimConnect.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

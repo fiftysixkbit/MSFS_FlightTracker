@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MapControl;
+using System;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using MapControl;
 
 namespace MSFS_FlightTracker
 {
