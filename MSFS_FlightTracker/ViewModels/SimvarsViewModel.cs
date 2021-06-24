@@ -577,7 +577,7 @@ namespace MSFS_FlightTracker
                 AddRequest("GROUND ALTITUDE", "feet", false);
                 AddRequest("PLANE LATITUDE", "degree latitude", false);
                 AddRequest("PLANE LONGITUDE", "degree longitude", false);
-                AddRequest("HEADING INDICATOR", "degree", false);
+                AddRequest("PLANE HEADING DEGREES TRUE", "degree", false);
                 AddRequest("AIRSPEED TRUE", "knot", false);
                 AddRequest("AIRSPEED INDICATED", "knot", false);
                 AddRequest("GROUND VELOCITY", "knot", false);
@@ -742,7 +742,7 @@ namespace MSFS_FlightTracker
                         bLatitude = oSimvarRequest.dValue;
                         bLatitudeStr = oSimvarRequest.sValue;
                     }
-                    else if (oSimvarRequest.sName == "HEADING INDICATOR")
+                    else if (oSimvarRequest.sName == "PLANE HEADING DEGREES TRUE")
                     {
                         bHeading = oSimvarRequest.dValue;
                         bHeadingStr = oSimvarRequest.sValue;
