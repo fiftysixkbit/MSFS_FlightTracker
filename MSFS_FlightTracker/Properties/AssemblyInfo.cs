@@ -5,11 +5,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MSFS Flight Tracker Tool")]
+[assembly: AssemblyTitle("MSFS Flight Tracker Tool v0.1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Benjamin Yip")]
-[assembly: AssemblyProduct("MSFS_FlightTracker")]
+[assembly: AssemblyProduct("MSFS Flight Tracker")]
 [assembly: AssemblyCopyright("Copyright © Benjamin Yip 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

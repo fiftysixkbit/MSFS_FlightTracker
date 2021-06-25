@@ -250,7 +250,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
                                     Margin="10,-12,10,0">
-                            <Label Content="Heading:" 
+                            <Label Content="True Heading:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Top"
                                    Height="33"
