@@ -7,7 +7,7 @@ Generate maps and charts in real-time for your flights:
 Also in dark mode:
 ![Chart Dark](Assets/Screenshots/chart_dark.png)
 
-This project uses the SimConnect SDK to retrieve various flight statistics from the simulator.  A map is displayed using OpenStreetMap and WPF Map Control (https://www.codeproject.com/Articles/87944/WPF-Map-Control-using-openstreetmap-org-Data).  Charts are generated in real-time using Live Charts (https://github.com/Live-Charts/Live-Charts).
+This project uses the SimConnect SDK to retrieve various flight statistics from the simulator.  A map is displayed using OpenStreetMap and WPF Map Control (https://www.codeproject.com/Articles/87944/WPF-Map-Control-using-openstreetmap-org-Data).  Charts are generated in real-time using Live Charts (https://github.com/beto-rodriguez/LiveCharts2).
 
 # Installation Instructions
 1. Install .NET 4.7.2 if needed - download here: https://dotnet.microsoft.com/download/dotnet-framework/net472
